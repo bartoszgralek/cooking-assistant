@@ -2,11 +2,12 @@ package com.gralek.shatee.database;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -18,6 +19,12 @@ public class Recipe {
 
     @NotNull
     private String title;
+
+    @OneToMany
+    private List<Step> steps = new ArrayList<>();
+
+    @ManyToMany
+    private Set<Tool> tools = new HashSet<>();
 
     private Recipe() {}
 
