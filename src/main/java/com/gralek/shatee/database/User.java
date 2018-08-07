@@ -1,7 +1,9 @@
 package com.gralek.shatee.database;
 
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,7 +11,9 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 public class User {
 
@@ -24,10 +28,10 @@ public class User {
     @Size(min = 8)
     private String password;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     private Set<Recipe> favouriteRecipes = new HashSet<>();
 
-    @ManyToMany
+    @OneToMany(mappedBy = "author", cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     private Set<Recipe> createdRecipes = new HashSet<>();
 
     private User() {}

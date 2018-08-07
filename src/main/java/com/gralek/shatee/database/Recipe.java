@@ -1,15 +1,16 @@
 package com.gralek.shatee.database;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 public class Recipe {
 
@@ -20,16 +21,44 @@ public class Recipe {
     @NotNull
     private String title;
 
-    @OneToMany
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Step> steps = new ArrayList<>();
 
     @ManyToMany
     private Set<Tool> tools = new HashSet<>();
 
+    @ManyToMany(mappedBy = "favouriteRecipes" ,cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    private Set<User> users = new HashSet<>();
+
+    @ManyToOne
+    private User author;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Recipe recipe = (Recipe) o;
+        return Objects.equals(id, recipe.id) &&
+                Objects.equals(title, recipe.title) &&
+                Objects.equals(steps, recipe.steps) &&
+                Objects.equals(tools, recipe.tools);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, steps, tools);
+    }
+
     private Recipe() {}
 
     public Recipe(String title) {
         this.title = title;
+    }
+
+    @PreRemove
+    private void detachRecipeFromUsers() {
+        users.stream().forEach(user -> user.getFavouriteRecipes().remove(this));
+
     }
 
 }
