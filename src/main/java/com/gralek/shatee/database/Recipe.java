@@ -24,8 +24,8 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Step> steps = new ArrayList<>();
 
-    @ManyToMany
-    private Set<Tool> tools = new HashSet<>();
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    private Set<ToolItem> tools = new HashSet<>();
 
     @ManyToMany(mappedBy = "favouriteRecipes" ,cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     private Set<User> users = new HashSet<>();
