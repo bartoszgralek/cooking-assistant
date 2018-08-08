@@ -33,6 +33,10 @@ class RecipeList extends Component {
         });
     }
 
+    getIdFromHref(href) {
+        return href.slice(-1);
+    }
+
     render() {
         const {recipes, isLoading} = this.state;
 
@@ -42,10 +46,10 @@ class RecipeList extends Component {
 
         const recipeList = recipes.map(recipe => {
             return <tr key={recipe._links.self.href}>
-                <td style={{whiteSpace: 'nowrap'}}>{recipe.title}</td>
+                <td style={{whiteSpace: 'nowrap'}} align="center" >{recipe.title}</td>
                 <td>
                     <ButtonGroup>
-                        <Button size="sm" color="primary" tag={Link} to={"/recipes/" + recipe.id}>Edit</Button>
+                        <Button size="sm" color="primary" tag={Link} to={"/recipes/" + this.getIdFromHref(recipe._links.self.href)}>Edit</Button>
                         <Button size="sm" color="danger" onClick={() => this.remove(recipe._links.self.href)}>Delete</Button>
                     </ButtonGroup>
                 </td>
@@ -63,10 +67,8 @@ class RecipeList extends Component {
                     <Table className="mt-4">
                         <thead>
                         <tr>
-                            <th width="20%">Name</th>
-                            <th width="20%">Location</th>
-                            <th>Events</th>
-                            <th width="10%">Actions</th>
+                            <th width="80%" className="text-center">Title</th>
+                            <th width="20%" >Actions</th>
                         </tr>
                         </thead>
                         <tbody>
