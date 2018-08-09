@@ -27,6 +27,7 @@ public class Step {
     @NotNull
     private String description;
 
+    @ToString.Exclude //stop recursion
     @ManyToOne
     private Recipe recipe;
 

@@ -37,10 +37,12 @@ public class User {
     @JsonIgnore
     private String password;
 
-    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @ToString.Exclude
+    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.PERSIST,CascadeType.REFRESH})
     private Set<Recipe> favouriteRecipes = new HashSet<>();
 
-    @OneToMany(mappedBy = "author", cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @ToString.Exclude
+    @OneToMany(mappedBy = "author", cascade = {CascadeType.DETACH,CascadeType.PERSIST,CascadeType.REFRESH})
     private Set<Recipe> createdRecipes = new HashSet<>();
 
     public User() {}

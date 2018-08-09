@@ -16,6 +16,7 @@ public class ToolItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ToString.Exclude
     @ManyToOne
     private Recipe recipe;
 
