@@ -28,7 +28,7 @@ public class SpringDataRestEventHandler {
         if (user == null) {
             User newUser = new User();
             newUser.setEmail(email);
-            newUser.setRoles(new String[]{"ROLE_MANAGER"});
+            newUser.setRoles(new String[]{"ROLE_USER"});
             user = this.userRepository.save(newUser);
         }
         recipe.setAuthor(user);

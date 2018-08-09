@@ -29,6 +29,7 @@ public class User {
     @NotNull
     private String email;
 
+    @JsonIgnore
     private String[] roles;
 
     @NotNull
