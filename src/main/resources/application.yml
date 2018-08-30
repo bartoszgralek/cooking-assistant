@@ -1,15 +1,4 @@
 spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          okta:
-            client-id: 0oafw0ctj7ArMUGzv0h7
-            client-secret: C5PkxaKIYg2s7x-FNMgNfNxCbC86Yw3YkysEN_0F
-            scope: openid email profile
-        provider:
-          okta:
-            issuer-uri: https://dev-637006.oktapreview.com/oauth2/default
   h2:
     console:
       enabled: true
@@ -26,6 +15,8 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
-  data:
-    rest:
-      base-path: /api
+    data:
+      rest:
+        base-path: /api
+  messages:
+    basename: validation

@@ -1,0 +1,17 @@
+.recipes {
+    margin: auto;
+    width: 80%;
+    padding: 2em 0 0 2em;
+}
+
+.table tr {
+    border: 2px solid #ffd1dc;
+}
+
+.table tr th {
+    border-bottom: 2px solid #ffd1dc;
+}
+
+tbody tr:hover {
+    background-color: #ffd1dc;
+}
