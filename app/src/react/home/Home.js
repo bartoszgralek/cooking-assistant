@@ -2,12 +2,12 @@ import React, {Component} from "react";
 import './Home.css';
 import {Button, Jumbotron,} from 'reactstrap';
 import * as Auth from '../utils/Auth';
-import browserHistory from "../History";
+import myHistory from '../history/History';
 
 class Home extends Component {
 
     handleMove = () => {
-        Auth.isAuth() ? browserHistory.push("/welcome") : browserHistory.push("/login");
+        Auth.isAuth() ? myHistory.push("/welcome") : myHistory.push("/login");
     };
 
     render() {

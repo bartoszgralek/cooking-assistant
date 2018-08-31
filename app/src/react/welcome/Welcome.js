@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import "./Welcome.css";
-import {logout} from "../redux/actions";
 import {connect} from "react-redux";
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText, NavHeader, NavTitle } from './StyledSideNav';
-import {FakeHome} from "../FakeHome";
-import Recipes from "../Recipes";
+import SideNav, {Nav, NavHeader, NavIcon, NavItem, NavText, NavTitle, Toggle} from './StyledSideNav';
 import * as Auth from '../utils/Auth';
-import browserHistory from "../History";
-import UserList from "../usersList/UserList";
+import UserList from "../usersList/Users";
+import {FakeHome} from "../../FakeHome";
+import Recipes from "../recipesList/Recipes";
+import myHistory from "../history/History";
+import {logout} from "../../redux/store";
 
 class Welcome extends Component {
     state = {
@@ -37,7 +37,7 @@ class Welcome extends Component {
             case 'logout':
                 Auth.logout();
                 this.props.logout();
-                browserHistory.push("/");
+                myHistory.push("/");
                 return;
             default:
                 return <FakeHome/>;

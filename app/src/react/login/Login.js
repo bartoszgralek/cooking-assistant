@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Button, Col, Container, Form, FormFeedback, FormGroup, Input, Label} from 'reactstrap';
 import './Login.css';
-import {login} from "../redux/actions";
 import {connect} from "react-redux";
 import {Loader} from "../loader/Loader";
+import {login} from "../../redux/domain/login";
 
 class Login extends Component {
     constructor() {

@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import connect from "react-redux/es/connect/connect";
-import {fetchRecipes} from "./redux/actions";
-import {Loader} from "./loader/Loader";
+import {Loader} from "../loader/Loader";
 import './Recipes.css';
-import {Container, Table} from "reactstrap";
-import Theme from './colors/index';
+import {fetchRecipes} from "../../redux/domain/recipes";
 
 class Recipes extends Component{
 

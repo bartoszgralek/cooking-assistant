@@ -1,13 +1,8 @@
 import styled from 'styled-components';
-import SideNav, {
-    Toggle,
-    Nav,
-    NavItem,
-    NavIcon,
-    NavText
-} from '@trendmicro/react-sidenav';
-import Theme from "../colors";
-import {store} from "../redux/store";
+import SideNav, {Nav, NavIcon, NavItem, NavText, Toggle} from '@trendmicro/react-sidenav';
+import Theme from "../colors/index";
+
+
 const red = "#DB3D44";
 
 

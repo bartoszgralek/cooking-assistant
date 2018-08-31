@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Home from './home/Home';
+import Home from './react/home/Home';
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Route, Router, Switch} from 'react-router-dom';
-import Login from "./login/Login";
-import Welcome from "./welcome/Welcome";
-import {PrivateRoute} from "./utils/Auth";
+import Login from "./react/login/Login";
+import Welcome from "./react/welcome/Welcome";
+import {PrivateRoute} from "./react/utils/Auth";
 import {Provider} from "react-redux";
 import {store} from "./redux/store";
-import myHistory from "./History";
+import myHistory from "./react/history/History";
 
 window.store = store;
 

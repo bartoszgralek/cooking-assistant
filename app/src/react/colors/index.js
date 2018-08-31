@@ -12,6 +12,7 @@ const adminTheme = undefined;
 
 const loadTheme = (role) => {
     switch(role) {
+
         case 'ROLE_ADMIN':
 
         case 'ROLE_USER':

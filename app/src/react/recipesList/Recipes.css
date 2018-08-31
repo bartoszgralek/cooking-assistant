@@ -4,14 +4,19 @@
     padding: 2em 0 0 2em;
 }
 
-.table tr {
+.recipes .table tr {
     border: 2px solid #ffd1dc;
 }
 
-.table tr th {
+.recipes .table tr th {
     border-bottom: 2px solid #ffd1dc;
 }
 
-tbody tr:hover {
+.recipes tbody:hover {
+    cursor: pointer;
+}
+
+.recipes tbody tr:hover {
+
     background-color: #ffd1dc;
 }

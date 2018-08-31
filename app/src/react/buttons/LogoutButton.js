@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button} from "reactstrap";
 import * as Auth from '../utils/Auth';
-import browserHistory from '../History';
+import browserHistory from '../history/History';
 
 class LogoutButton extends Component{
 
