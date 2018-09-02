@@ -1,16 +1,13 @@
 import React, {Component} from 'react';
 import "./Welcome.css";
-import {connect} from "react-redux";
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import SideNav, {Nav, NavHeader, NavIcon, NavItem, NavText, NavTitle, Toggle} from './StyledSideNav';
-import * as Auth from '../utils/Auth';
 import UserList from "../usersList/Users";
-import {FakeHome} from "../../FakeHome";
 import Recipes from "../recipesList/Recipes";
-import myHistory from "../history/History";
-import {persistor} from "../../redux/store";
+import {ISADMIN, LOGOUT} from "../utils/WebUtils";
+import {FakeHome} from "../FakeHome";
 
-class Welcome extends Component {
+export default class Welcome extends Component {
     state = {
         selected: 'home',
         expanded: false
@@ -37,11 +34,6 @@ class Welcome extends Component {
             default:
                 return <FakeHome/>;
         }
-    };
-
-    handleLogout = async() => {
-        this.props.logout();
-        myHistory.push("/");
     };
 
 
@@ -83,7 +75,7 @@ class Welcome extends Component {
                                 Favourites
                             </NavText>
                         </NavItem>
-                        {this.props.admin && <NavItem eventKey="users">
+                        {ISADMIN() && <NavItem eventKey="users">
                             <NavIcon>
                                 <i className="fas fa-users" style={{ fontSize: '1.75em' }} />
                             </NavIcon>
@@ -91,7 +83,7 @@ class Welcome extends Component {
                                 Users
                             </NavText>
                         </NavItem>}
-                        <NavItem eventKey="logout" style={{position: 'absolute',width: '100%',bottom:0}} onClick={this.handleLogout}>
+                        <NavItem eventKey="logout" style={{position: 'absolute',width: '100%',bottom:0}} onClick={() => LOGOUT()}>
                             <NavIcon>
                                 <i className="fas fa-sign-out-alt" style={{ fontSize: '1.75em' }} />
                             </NavIcon>
@@ -113,17 +105,3 @@ class Welcome extends Component {
 
     }
 }
-
-const mapStateToProps = state => {
-  return {
-      admin: state.auth.role === 'ROLE_ADMIN'
-  }
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        logout: () => dispatch({type: 'RESET'})
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Welcome);

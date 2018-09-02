@@ -1,19 +1,37 @@
 import React, {Component} from 'react';
-import connect from "react-redux/es/connect/connect";
 import {Loader} from "../loader/Loader";
 import './Recipes.css';
-import {fetchRecipes} from "../../redux/domain/recipes";
+import {SENDREQUEST} from "../utils/WebUtils";
 
-class Recipes extends Component{
-
-    componentDidMount() {
-        this.props.fetchRecipes();
+export default class Recipes extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            recipes: [],
+            isLoading: true,
+            err: false
+        }
     }
 
 
+    async componentDidMount() {
+        const response = await SENDREQUEST("/recipes", 'GET');
+        if(response.ok) {
+            const recipes = await response.json();
+            this.setState({
+                recipes: recipes,
+                isLoading: false
+            });
+        }else {
+            this.setState({
+                err: true,
+                isLoading: false
+            });
+        }
+    }
 
     render() {
-        const recipeList = this.props.recipes.map(el =>
+        const recipeList = this.state.recipes.map(el =>
             {
                 return <tr key={el.id}>
                     <td>{el.id}</td>
@@ -23,10 +41,10 @@ class Recipes extends Component{
         );
 
 
-        if(this.props.isLoading){
+        if(this.state.isLoading){
             return <Loader/>
         }
-        if(this.props.error) {
+        if(this.state.error) {
             return <h2>You are not authorized!</h2>;
         }
         return (
@@ -48,13 +66,3 @@ class Recipes extends Component{
     }
 
 }
-
-function mapStateToProps(state){
-    return {
-        recipes: state.recipesReducer.recipes,
-        isLoading: state.recipesReducer.isLoading,
-        error: state.recipesReducer.error
-    }
-}
-
-export default connect(mapStateToProps,{fetchRecipes})(Recipes);

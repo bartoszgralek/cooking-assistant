@@ -1,21 +1,38 @@
 import React, {Component} from 'react';
-import connect from "react-redux/es/connect/connect";
 import {Loader} from "../loader/Loader";
-import {fetchUsers} from "../../redux/domain/users";
-
 import './Users.css';
-import EditUserModal from "../modals/EditUserModal";
 import ButtonWithModal from "../buttons/ButtonWithModal";
+import {SENDREQUEST} from "../utils/WebUtils";
 
-class Users extends Component{
+export default class Users extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            users: [],
+            isLoading: true,
+            err: false
+        }
+    }
 
-    componentDidMount() {
-        this.props.fetchUsers();
+
+    async componentDidMount() {
+        const response = await SENDREQUEST("/users", 'GET');
+        if(response.ok) {
+            const users = await response.json();
+            this.setState({
+                users: users,
+                isLoading: false
+            });
+        }else {
+            this.setState({
+                err: true,
+                isLoading: false
+            });
+        }
     }
 
     render() {
-        const userList = this.props.users.map(el =>
-            {
+        const userList = this.state.users.map(el => {
                 return <tr key={el.id}>
                     <td>{el.id}</td>
                     <td style={{whiteSpace: 'nowrap'}}>{el.username}</td>
@@ -25,10 +42,10 @@ class Users extends Component{
             }
         );
 
-        if(this.props.isLoading){
+        if (this.state.isLoading) {
             return <Loader/>;
         }
-        if(this.props.auth_err) {
+        if (this.state.err) {
             return <h2>You are not authorized!</h2>;
         }
         return (
@@ -52,13 +69,3 @@ class Users extends Component{
     }
 
 }
-
-function mapStateToProps(state){
-    return {
-        users: state.usersReducer.users,
-        isLoading: state.usersReducer.isLoading,
-        auth_err: state.usersReducer.auth_err
-    }
-}
-
-export default connect(mapStateToProps,{fetchUsers})(Users);

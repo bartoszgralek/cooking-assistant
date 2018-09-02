@@ -1,17 +1,19 @@
 import React, {Component} from 'react';
 import {Button, Col, Container, Form, FormFeedback, FormGroup, Input, Label} from 'reactstrap';
 import './Login.css';
-import {connect} from "react-redux";
 import {Loader} from "../loader/Loader";
-import {login} from "../../redux/domain/login";
+import {GETUSER, STOREUSER} from "../utils/WebUtils";
+import {Base64} from "js-base64";
+import myHistory from "../history/History";
 
-class Login extends Component {
+export default class Login extends Component {
     constructor() {
         super();
         this.state = {
             username: '',
             password: '',
-            error: null
+            err: false,
+            isLoading: false
         };
     }
 
@@ -27,17 +29,35 @@ class Login extends Component {
 
     handleSubmit = async(event) => {
         event.preventDefault();
-        this.props.login(this.state.username, this.state.password);
+        this.setState({isLoading: true});
+        const response = await fetch("http://localhost:8080/login", {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + Base64.btoa(this.state.username+":"+this.state.password)
+            }
+        });
+        console.log(response);
+        if(response.ok){
+            const user = await response.json();
+            console.log(user);
+            STOREUSER(user);
+            console.log(GETUSER());
+            this.setState({isLoading: false});
+            myHistory.push("/welcome");
+        }else {
+            this.setState({err: true, isLoading: false});
+        }
     };
 
     render() {
-        if(this.props.isLoading) {
+        if(this.state.isLoading) {
             return <Loader/>
         }
         return (
             <Container className="Login">
                 <h2>Sign In</h2>
-                {this.props.auth_err}
+                {this.state.err && <h2>Bad credentials!</h2>}
                 <Form className="form" onSubmit={this.handleSubmit}>
                     <Col>
                         <FormGroup>
@@ -85,12 +105,3 @@ class Login extends Component {
         );
     }
 }
-
-const mapStateToProps = state => {
-    return {
-        isLoading: state.auth.isLoading,
-        auth_err: state.auth.auth_err
-    }
-};
-
-export default connect(mapStateToProps,{login})(Login);

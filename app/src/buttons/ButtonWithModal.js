@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
-import {connect} from "react-redux";
-import {editUser} from "../../redux/domain/editUser";
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
-import {Loader} from "../loader/Loader";
 
-class ButtonWithModal extends Component {
+export default class ButtonWithModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -40,5 +37,3 @@ class ButtonWithModal extends Component {
         );
     }
 }
-
-export default ButtonWithModal;

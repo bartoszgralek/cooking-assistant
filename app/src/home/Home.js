@@ -1,13 +1,13 @@
 import React, {Component} from "react";
 import './Home.css';
 import {Button, Jumbotron,} from 'reactstrap';
-import * as Auth from '../utils/Auth';
 import myHistory from '../history/History';
+import {ISAUTHED} from "../utils/WebUtils";
 
-class Home extends Component {
+export default class Home extends Component {
 
     handleMove = () => {
-        Auth.isAuth() ? myHistory.push("/welcome") : myHistory.push("/login");
+        ISAUTHED ? myHistory.push("/welcome") : myHistory.push("/login");
     };
 
     render() {
@@ -26,7 +26,3 @@ class Home extends Component {
         );
     }
 }
-
-
-
-export default Home;
