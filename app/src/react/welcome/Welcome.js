@@ -8,7 +8,7 @@ import UserList from "../usersList/Users";
 import {FakeHome} from "../../FakeHome";
 import Recipes from "../recipesList/Recipes";
 import myHistory from "../history/History";
-import {logout} from "../../redux/store";
+import {persistor} from "../../redux/store";
 
 class Welcome extends Component {
     state = {
@@ -34,15 +34,16 @@ class Welcome extends Component {
                 return <Recipes/>;
             case 'users':
                 return <UserList/>;
-            case 'logout':
-                Auth.logout();
-                this.props.logout();
-                myHistory.push("/");
-                return;
             default:
                 return <FakeHome/>;
         }
     };
+
+    handleLogout = async() => {
+        this.props.logout();
+        myHistory.push("/");
+    };
+
 
     render() {
         const { expanded } = this.state;
@@ -90,7 +91,7 @@ class Welcome extends Component {
                                 Users
                             </NavText>
                         </NavItem>}
-                        <NavItem eventKey="logout" style={{position: 'absolute',width: '100%',bottom:0}}>
+                        <NavItem eventKey="logout" style={{position: 'absolute',width: '100%',bottom:0}} onClick={this.handleLogout}>
                             <NavIcon>
                                 <i className="fas fa-sign-out-alt" style={{ fontSize: '1.75em' }} />
                             </NavIcon>
@@ -115,13 +116,13 @@ class Welcome extends Component {
 
 const mapStateToProps = state => {
   return {
-      admin: state.accessReducer.role === 'ROLE_ADMIN'
+      admin: state.auth.role === 'ROLE_ADMIN'
   }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        logout: () => dispatch(logout())
+        logout: () => dispatch({type: 'RESET'})
     }
 };
 

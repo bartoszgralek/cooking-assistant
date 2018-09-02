@@ -1,6 +1,7 @@
 import {Base64} from "js-base64";
 import {Redirect, Route} from "react-router";
 import React from 'react';
+import {connect} from "react-redux";
 
 export const sendRequest = async(url, method, body) => {
     const {username, password} = loadData();
@@ -55,6 +56,32 @@ export const login = async(username, password) => {
 
 export const logout = () => {
     localStorage.clear();
+};
+
+export default (ProtectedRoute) => {
+    class AuthHOC extends React.Component {
+
+        render () {
+            // Return a Loading component while the isLoading function is 'true'
+            if (!this.props.isAuthed) {
+                return <Redirect to="/login"/>
+            }
+            // Pass the received 'props' and created functions to the ProtectedRoute component
+            return (
+                <ProtectedRoute
+                    {...this.props}
+                />
+            )
+        }
+    }
+
+    const mapStateToProps = state => {
+        return {
+            isAuthed: state.auth.role
+        }
+    };
+
+    return connect(mapStateToProps)(AuthHOC);
 };
 
 

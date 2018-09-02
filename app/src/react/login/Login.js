@@ -88,8 +88,8 @@ class Login extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoading: state.accessReducer.isLoading,
-        auth_err: state.accessReducer.auth_err
+        isLoading: state.auth.isLoading,
+        auth_err: state.auth.auth_err
     }
 };
 

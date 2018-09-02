@@ -4,8 +4,8 @@ import {Loader} from "../loader/Loader";
 import {fetchUsers} from "../../redux/domain/users";
 
 import './Users.css';
-import EditUserButton from "../buttons/EditUserButton";
 import EditUserModal from "../modals/EditUserModal";
+import ButtonWithModal from "../buttons/ButtonWithModal";
 
 class Users extends Component{
 
@@ -20,7 +20,7 @@ class Users extends Component{
                     <td>{el.id}</td>
                     <td style={{whiteSpace: 'nowrap'}}>{el.username}</td>
                     <td style={{whiteSpace: 'nowrap'}}>{el.role}</td>
-                    <td><EditUserButton userId={el.id}/></td>
+                    <td><ButtonWithModal user={el} buttonLabel='Edit'/></td>
                 </tr>
             }
         );
@@ -47,7 +47,6 @@ class Users extends Component{
                     {userList}
                     </tbody>
                 </table>
-                <EditUserModal/>
             </div>
         );
     }

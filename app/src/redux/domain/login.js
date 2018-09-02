@@ -1,5 +1,5 @@
 import * as Auth from "../../react/utils/Auth";
-import browserHistory from "../../react/history/History";
+import myHistory from "../../react/history/History";
 
 // ########################## ACTIONS  ##########################
 
@@ -28,7 +28,7 @@ export const login = (username, password) => {
                 console.log(data);
                 Auth.storeData(username, password, data.role);
                 dispatch(loginSuccess(data.role));
-                browserHistory.push("/welcome");
+                myHistory.push("/welcome");
             }else{
                 dispatch(loginFailed());
             }
