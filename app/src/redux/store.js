@@ -8,6 +8,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
 import {logoutReducer} from "./domain/logout";
 import reduxReset from 'redux-reset'
+import {Base64} from "js-base64";
 
 
 
@@ -33,8 +34,45 @@ const persistConfig = {
     whitelist: ['auth']
 };
 
+const requestMiddleware = store => next => async(action) => {
+    console.log(action);
+  if(action.type === 'FETCH') {
+
+      try {
+          const response = await fetch("http://localhost:8080"+action.payload.url, {
+              method: action.payload.method,
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Basic ' + Base64.btoa(store.getState().auth.user.username +":"+ store.getState().auth.user.password)
+              },
+              body: action.payload.body
+          });
+
+          const length = action.payload.url.length;
+          const part = action.payload.url.substring(1, length).toUpperCase();
+
+          if(response.ok) {
+              const data = await response.json();
+              return next({
+                  type: "FETCH_"+part+"_SUCCESS",
+                  payload: data
+              });
+          }else {
+              return next({
+                  type: "FETCH_"+part+"_FAILED"
+              });
+          }
+      }catch(err) {
+          console.log(err);
+      }
+  }
+
+  return next(action);
+
+};
+
 const enHanceCreateStore = compose(
-    applyMiddleware(thunk),
+    applyMiddleware(thunk, requestMiddleware),
     reduxReset()  // Will use 'RESET' as default action.type to trigger reset
 )(createStore);
 

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import connect from "react-redux/es/connect/connect";
 import {Loader} from "../loader/Loader";
 import './Recipes.css';
-import {fetchRecipes} from "../../redux/domain/recipes";
 
 class Recipes extends Component{
 
@@ -57,4 +56,18 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps,{fetchRecipes})(Recipes);
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchRecipes: () => {
+            dispatch({
+                type: 'FETCH',
+                payload: {
+                    url: "/recipes",
+                    method: 'GET'
+                }
+            });
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Recipes);

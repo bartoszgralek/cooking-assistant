@@ -13,6 +13,14 @@ class Users extends Component{
     }
 
     render() {
+
+        if(this.props.isLoading){
+            return <Loader/>;
+        }
+        if(this.props.auth_err) {
+            return <h2>You are not authorized!</h2>;
+        }
+
         const userList = this.props.users.map(el =>
             {
                 return <tr key={el.id}>
@@ -24,12 +32,6 @@ class Users extends Component{
             }
         );
 
-        if(this.props.isLoading){
-            return <Loader/>;
-        }
-        if(this.props.auth_err) {
-            return <h2>You are not authorized!</h2>;
-        }
         return (
             <div className="users">
                 <h2>User list</h2>
@@ -60,4 +62,18 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps,{fetchUsers})(Users);
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchUsers: () => {
+            dispatch({
+                type: 'FETCH',
+                payload: {
+                    url: "/users",
+                    method: 'GET'
+                }
+            });
+        }
+    }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Users);

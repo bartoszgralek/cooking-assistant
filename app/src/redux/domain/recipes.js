@@ -1,4 +1,3 @@
-import * as Auth from "../../react/utils/Auth";
 
 // ########################## ACTIONS  ##########################
 
@@ -10,24 +9,6 @@ const recipesFetched = recipes => ({
 const recipesFailed = () => ({type: 'FETCH_RECIPES_FAILED'});
 
 const recipesLoading = () => ({type: "FETCH_RECIPES_LOADING"});
-
-export const fetchRecipes = () => {
-    return async(dispatch) => {
-        dispatch(recipesLoading());
-        try{
-            const response = await Auth.sendRequest("http://localhost:8080/recipes", "GET");
-            if(response.ok) {
-                const json = await response.json();
-                dispatch(recipesFetched(json));
-            }else{
-                dispatch(recipesFailed());
-            }
-        }catch(err){
-            console.log(err);
-        }
-    }
-
-};
 
 // ########################## REDUCERS ##########################
 
