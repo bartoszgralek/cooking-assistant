@@ -6,16 +6,12 @@ import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Route, Router, Switch} from 'react-router-dom';
 import Login from "./react/login/Login";
-import Welcome from "./react/welcome/Welcome";
-import {PrivateRoute} from "./react/utils/Auth";
-import {Provider} from "react-redux";
-import {store, persistor} from "./redux/store";
 import myHistory from "./react/history/History";
-import { PersistGate } from 'redux-persist/integration/react'
+import {persistor, store} from "./redux/store";
+import {Provider} from "react-redux";
+import Welcome from "./react/welcome/Welcome";
 import withAuthorization from './react/utils/Auth';
-
-window.store = store;
-window.persistor = persistor;
+import { PersistGate } from 'redux-persist/integration/react'
 
 class Index extends Component {
 

@@ -4,7 +4,6 @@ import {Loader} from "../loader/Loader";
 import {fetchUsers} from "../../redux/domain/users";
 
 import './Users.css';
-import EditUserModal from "../modals/EditUserModal";
 import ButtonWithModal from "../buttons/ButtonWithModal";
 
 class Users extends Component{
