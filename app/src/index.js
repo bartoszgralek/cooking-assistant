@@ -10,8 +10,10 @@ import myHistory from "./react/history/History";
 import {persistor, store} from "./redux/store";
 import {Provider} from "react-redux";
 import Welcome from "./react/welcome/Welcome";
-import withAuthorization from './react/utils/Auth';
+import withAuthorization from './react/utils/RouteUtils';
 import { PersistGate } from 'redux-persist/integration/react'
+
+window.store = store;
 
 class Index extends Component {
 

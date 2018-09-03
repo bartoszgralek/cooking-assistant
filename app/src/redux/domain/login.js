@@ -3,14 +3,13 @@ import myHistory from "../../react/history/History";
 
 // ########################## ACTIONS  ##########################
 
-const loginLoading = (username, password) => ({
-    type: 'LOGIN_LOADING',
-    payload: {username, password}
+const loginLoading = () => ({
+    type: 'LOGIN_LOADING'
 });
 
-const loginSuccess = (role) => ({
+const loginSuccess = user => ({
     type: 'LOGIN_SUCCESS',
-    payload: role
+    payload: user
 });
 
 const loginFailed = () => ({
@@ -26,8 +25,7 @@ export const login = (username, password) => {
             if(response.ok) {
                 const data = await response.json();
                 console.log(data);
-                Auth.storeData(username, password, data.role);
-                dispatch(loginSuccess(data.role));
+                dispatch(loginSuccess({...data, password: password}));
                 myHistory.push("/welcome");
             }else{
                 dispatch(loginFailed());
@@ -42,7 +40,7 @@ export const login = (username, password) => {
 
 const initState = {
     isLoading: false,
-    role: undefined,
+    user: undefined,
     auth_err: false
 };
 
@@ -51,7 +49,7 @@ export const accessReducer = (state = initState, action) => {
         case 'LOGIN_LOADING':
             return {...state, isLoading: true};
         case 'LOGIN_SUCCESS':
-            return {...state, isLoading: false, role: action.payload};
+            return {...state, isLoading: false, user: action.payload};
         case 'LOGIN_FAILED':
             return {...state, isLoading: false, auth_err: action.payload};
         default:

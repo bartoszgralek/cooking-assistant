@@ -1,14 +1,9 @@
 import React, {Component} from "react";
 import './Home.css';
 import {Button, Jumbotron,} from 'reactstrap';
-import * as Auth from '../utils/Auth';
 import myHistory from '../history/History';
 
-class Home extends Component {
-
-    handleMove = () => {
-        Auth.isAuth() ? myHistory.push("/welcome") : myHistory.push("/login");
-    };
+export default class Home extends Component {
 
     render() {
         return (
@@ -19,14 +14,10 @@ class Home extends Component {
                     <hr className="my-2" />
                     <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
                     <p className="lead">
-                        <Button color="primary" onClick={this.handleMove}>Sign In</Button>
+                        <Button color="primary" onClick={() => myHistory.push("/welcome")}>Sign In</Button>
                     </p>
                 </Jumbotron>
             </div>
         );
     }
 }
-
-
-
-export default Home;

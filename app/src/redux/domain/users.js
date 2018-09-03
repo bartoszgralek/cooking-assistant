@@ -1,4 +1,6 @@
 import * as Auth from "../../react/utils/Auth";
+import {SENDREQUEST} from "../../react/utils/WebUtils";
+import {Base64} from "js-base64";
 
 // ########################## ACTIONS  ##########################
 
@@ -15,7 +17,14 @@ export const fetchUsers = () => {
     return async(dispatch) => {
         dispatch(usersLoading());
         try{
-            const response = await Auth.sendRequest("http://localhost:8080/users", "GET");
+            const response = await fetch("http://localhost:8080/users", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + Base64.btoa(props.username + ":" + props.password)
+                },
+                body: body
+            });
             if(response.ok) {
                 const json = await response.json();
                 dispatch(usersFetched(json));

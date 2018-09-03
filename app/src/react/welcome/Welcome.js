@@ -114,7 +114,7 @@ class Welcome extends Component {
 
 const mapStateToProps = state => {
   return {
-      admin: state.auth.role === 'ROLE_ADMIN'
+      admin: state.auth.user.role === 'ROLE_ADMIN'
   }
 };
 
