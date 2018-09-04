@@ -6,25 +6,8 @@ import {usersReducer} from "./domain/users";
 import {editUserReducer} from "./domain/editUser";
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
-import {logoutReducer} from "./domain/logout";
 import reduxReset from 'redux-reset'
 import {Base64} from "js-base64";
-
-
-
-//
-// const rootReducer = (state, action) => {
-//
-//     if( action.type === 'USER_LOGOUT') {
-//         myHistory.push("/");
-//         state = undefined;
-//     }
-//
-//     return appReducer(state, action);
-// };
-
-
-
 
 const appReducer = combineReducers({ recipesReducer,auth: accessReducer, usersReducer, editUserReducer});
 

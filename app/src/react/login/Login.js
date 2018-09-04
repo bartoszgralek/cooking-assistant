@@ -5,6 +5,8 @@ import {connect} from "react-redux";
 import {Loader} from "../loader/Loader";
 import {login} from "../../redux/domain/login";
 
+import {persistor} from "../../redux/store";
+
 class Login extends Component {
     constructor() {
         super();
@@ -27,7 +29,11 @@ class Login extends Component {
 
     handleSubmit = async(event) => {
         event.preventDefault();
-        this.props.login(this.state.username, this.state.password);
+        await this.props.login(this.state.username, this.state.password);
+        // if(!this.props.auth_err) {
+        //     persistor.persist();
+        // }
+        // console.log("auth err?" + this.props.auth_err);
     };
 
     render() {

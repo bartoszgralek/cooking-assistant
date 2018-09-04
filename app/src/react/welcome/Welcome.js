@@ -7,6 +7,7 @@ import UserList from "../usersList/Users";
 import {FakeHome} from "../../FakeHome";
 import Recipes from "../recipesList/Recipes";
 import myHistory from "../history/History";
+import {persistor} from "../../redux/store";
 
 class Welcome extends Component {
     state = {
@@ -14,7 +15,13 @@ class Welcome extends Component {
         expanded: false
     };
 
-    onSelect = (selected) => {
+    onSelect = async(selected) => {
+        if(selected === 'logout') {
+            await this.props.logout();
+            //localStorage.clear();
+            //myHistory.push("/");
+            return;
+        }
         this.setState({ selected: selected });
         console.log("selected: " + this.state.selected);
     };
@@ -37,10 +44,11 @@ class Welcome extends Component {
         }
     };
 
-    handleLogout = async() => {
-        this.props.logout();
-        myHistory.push("/");
-    };
+    // handleLogout = async() => {
+    //     await this.props.logout();
+    //     persistor.persist();
+    //     myHistory.push("/");
+    // };
 
 
     render() {
@@ -89,7 +97,7 @@ class Welcome extends Component {
                                 Users
                             </NavText>
                         </NavItem>}
-                        <NavItem eventKey="logout" style={{position: 'absolute',width: '100%',bottom:0}} onClick={this.handleLogout}>
+                        <NavItem eventKey="logout" style={{position: 'absolute',width: '100%',bottom:0}}>
                             <NavIcon>
                                 <i className="fas fa-sign-out-alt" style={{ fontSize: '1.75em' }} />
                             </NavIcon>
