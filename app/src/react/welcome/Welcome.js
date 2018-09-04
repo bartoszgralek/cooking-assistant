@@ -18,8 +18,8 @@ class Welcome extends Component {
     onSelect = async(selected) => {
         if(selected === 'logout') {
             await this.props.logout();
-            //localStorage.clear();
-            //myHistory.push("/");
+            localStorage.clear();
+            myHistory.push("/");
             return;
         }
         this.setState({ selected: selected });

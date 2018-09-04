@@ -30,10 +30,9 @@ class Login extends Component {
     handleSubmit = async(event) => {
         event.preventDefault();
         await this.props.login(this.state.username, this.state.password);
-        // if(!this.props.auth_err) {
-        //     persistor.persist();
-        // }
-        // console.log("auth err?" + this.props.auth_err);
+        if(!this.props.auth_err) {
+            persistor.persist();
+        }
     };
 
     render() {
