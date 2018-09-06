@@ -2,14 +2,12 @@ package com.gralek.shatee.web;
 
 import com.gralek.shatee.domain.User;
 import com.gralek.shatee.repository.UserRepository;
+import com.gralek.shatee.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -19,6 +17,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
@@ -35,5 +36,10 @@ public class UserController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @PostMapping
+    public ResponseEntity<User> registration(@RequestBody UserForm userForm) {
+        User newUser = userService.save(userForm);
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+    }
 
 }

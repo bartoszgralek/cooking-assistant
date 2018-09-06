@@ -8,6 +8,7 @@ import {FakeHome} from "../../FakeHome";
 import Recipes from "../recipesList/Recipes";
 import {changeCard} from "../../redux/domain/nav";
 import {logout} from "../../redux/domain/logout";
+import ModalRoot from "../modals/rootModal";
 
 class Welcome extends Component {
     state = {
@@ -47,6 +48,7 @@ class Welcome extends Component {
 
         return (
             <div>
+                <ModalRoot/>
                 <SideNav
                     onSelect={this.onSelect}
                     onToggle={this.onToggle}

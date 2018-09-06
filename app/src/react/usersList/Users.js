@@ -6,6 +6,7 @@ import './Users.css';
 import {Button} from "reactstrap";
 import ModalRoot from "../modals/rootModal";
 import {showModal} from "../../redux/domain/modal";
+import {LoadingDots} from "../modals/Dots";
 
 class Users extends Component{
 
@@ -29,8 +30,7 @@ class Users extends Component{
                     <td style={{whiteSpace: 'nowrap'}}>{el.username}</td>
                     <td style={{whiteSpace: 'nowrap'}}>{el.role}</td>
                     <td>
-                        <Button color="danger" onClick={() => this.props.editUser(el)} />
-                        <ModalRoot/>
+                        <Button color="primary" onClick={() => this.props.editUser(el)} >Edit</Button>
                     </td>
                 </tr>
             }
@@ -52,6 +52,7 @@ class Users extends Component{
                     {userList}
                     </tbody>
                 </table>
+                <Button color="success" onClick={this.props.newUser}>Add User</Button>
             </div>
         );
     }
@@ -79,6 +80,9 @@ const mapDispatchToProps = dispatch => {
         },
         editUser: user => {
             dispatch(showModal('EDIT_USER',{user, dispatch}));
+        },
+        newUser: () => {
+            dispatch(showModal('NEW_USER', {dispatch}))
         }
     }
 };

@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import './Home.css';
 import {Button, Jumbotron,} from 'reactstrap';
 import myHistory from '../history/History';
+import ModalRoot from "../modals/rootModal";
 
 export default class Home extends Component {
 

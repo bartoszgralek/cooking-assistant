@@ -1,9 +1,12 @@
 import {EditUserModal} from '../../react/modals/editUserModal';
 import React from 'react';
 import {connect} from "react-redux";
-
+import {EditRecipeModal} from "./editRecipeModal";
+import NewUserModal from './newUserModal';
 const MODAL_COMPONENTS = {
-    'EDIT_USER': EditUserModal
+    'EDIT_USER': EditUserModal,
+    'EDIT_RECIPE': EditRecipeModal,
+    'NEW_USER': NewUserModal
     /* other modals */
 };
 

@@ -3,6 +3,7 @@ import connect from "react-redux/es/connect/connect";
 import {Loader} from "../loader/Loader";
 import './Recipes.css';
 import {Button, ButtonGroup} from "reactstrap";
+import {showModal} from "../../redux/domain/modal";
 
 class Recipes extends Component{
 
@@ -17,7 +18,7 @@ class Recipes extends Component{
                     <td>{el.id}</td>
                     <td style={{whiteSpace: 'nowrap'}}>{el.title}</td>
                     <td><ButtonGroup>
-                        <Button color="primary">Edit</Button>
+                        <Button color="primary" onClick={() => this.props.editRecipe(el)}>Edit</Button>
                         <Button color="danger" onClick={() => this.props.deleteRecipeById(el.id)}>Delete</Button>
                     </ButtonGroup></td>
                 </tr>
@@ -79,6 +80,9 @@ const mapDispatchToProps = dispatch => {
                     url: '/recipes/'+id
                 }
             })
+        },
+        editRecipe: recipe => {
+            dispatch(showModal('EDIT_RECIPE',{recipe, dispatch}));
         }
     }
 };
