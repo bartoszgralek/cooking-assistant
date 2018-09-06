@@ -14,6 +14,7 @@ import withAuthorization from './react/utils/RouteUtils';
 import { PersistGate } from 'redux-persist/integration/react'
 
 window.store = store;
+window.persistor = persistor;
 
 class Index extends Component {
 

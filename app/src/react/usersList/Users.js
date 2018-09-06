@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import connect from "react-redux/es/connect/connect";
 import {Loader} from "../loader/Loader";
-import {fetchUsers} from "../../redux/domain/users";
 
 import './Users.css';
-import ButtonWithModal from "../buttons/ButtonWithModal";
+import {Button} from "reactstrap";
+import ModalRoot from "../modals/rootModal";
+import {showModal} from "../../redux/domain/modal";
 
 class Users extends Component{
 
     componentDidMount() {
-        this.props.fetchUsers();
+        this.props.getUsers();
     }
 
     render() {
@@ -27,7 +28,10 @@ class Users extends Component{
                     <td>{el.id}</td>
                     <td style={{whiteSpace: 'nowrap'}}>{el.username}</td>
                     <td style={{whiteSpace: 'nowrap'}}>{el.role}</td>
-                    <td><ButtonWithModal user={el} buttonLabel='Edit'/></td>
+                    <td>
+                        <Button color="danger" onClick={() => this.props.editUser(el)} />
+                        <ModalRoot/>
+                    </td>
                 </tr>
             }
         );
@@ -64,14 +68,17 @@ function mapStateToProps(state){
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchUsers: () => {
+        getUsers: () => {
             dispatch({
-                type: 'FETCH',
+                type: 'GET',
                 payload: {
+                    reducer: 'USERS',
                     url: "/users",
-                    method: 'GET'
                 }
             });
+        },
+        editUser: user => {
+            dispatch(showModal('EDIT_USER',{user, dispatch}));
         }
     }
 };

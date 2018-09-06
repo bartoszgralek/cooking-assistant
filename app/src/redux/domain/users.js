@@ -1,27 +1,33 @@
-import * as Auth from "../../react/utils/Auth";
-import {fetchData, SENDREQUEST} from "../../react/utils/WebUtils";
-import {Base64} from "js-base64";
-
 // ########################## ACTIONS  ##########################
 
 const usersFetched = users => ({
-    type: "FETCH_USERS_SUCCESS",
+    type: "GET_USERS_SUCCESS",
     payload: users
 });
 
-const usersFailed = () => ({type: 'FETCH_USERS_FAILED'});
+const usersFailed = () => ({type: 'GET_USERS_FAILED'});
 
-const usersLoading = () => ({type: "FETCH_USERS_LOADING"});
+const usersLoading = () => ({type: "GET_USERS_LOADING"});
 
-export const fetchUsers = () => {
+export const getUsers = () => {
     return async(dispatch) => {
         dispatch({
-            type: 'FETCH',
+            type: 'GET',
             payload: {
                 url: "/users",
-                method: 'GET'
+                body: null
             }
         });
+    }
+};
+
+export const findUserById = (array, id) => {
+    let user = null;
+    for(let i=0;i<array.length;i++) {
+        if(array[i].id === id) {
+            user = array[i];
+            break;
+        }
     }
 };
 
@@ -29,18 +35,18 @@ export const fetchUsers = () => {
 // ########################## REDUCERS ##########################
 
 const initState = {
-    isLoading: true,
+    isLoading: false,
     users: [],
     auth_err: false
 };
 
 export const usersReducer = (state = initState, action) => {
     switch(action.type) {
-        case 'FETCH_USERS_LOADING':
+        case 'GET_USERS_LOADING':
             return {...state, isLoading: true};
-        case 'FETCH_USERS_SUCCESS':
+        case 'GET_USERS_SUCCESS':
             return {...state, users: action.payload, isLoading: false};
-        case 'FETCH_USERS_FAILED':
+        case 'GET_USERS_FAILED':
             return {...state, auth_err: true, isLoading: false};
         default:
             return state;

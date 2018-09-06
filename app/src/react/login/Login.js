@@ -3,7 +3,7 @@ import {Button, Col, Container, Form, FormFeedback, FormGroup, Input, Label} fro
 import './Login.css';
 import {connect} from "react-redux";
 import {Loader} from "../loader/Loader";
-import {login} from "../../redux/domain/login";
+import {access, login} from "../../redux/domain/access";
 
 import {persistor} from "../../redux/store";
 
@@ -33,6 +33,7 @@ class Login extends Component {
         if(!this.props.auth_err) {
             persistor.persist();
         }
+        this.setState({error: this.props.auth_err})
     };
 
     render() {
@@ -42,7 +43,7 @@ class Login extends Component {
         return (
             <Container className="Login">
                 <h2>Sign In</h2>
-                {this.props.auth_err}
+                {this.state.error}
                 <Form className="form" onSubmit={this.handleSubmit}>
                     <Col>
                         <FormGroup>
@@ -98,4 +99,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps,{login})(Login);
+export default connect(mapStateToProps, {login})(Login);

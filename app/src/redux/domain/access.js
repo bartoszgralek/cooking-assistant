@@ -1,6 +1,5 @@
-import * as Auth from "../../react/utils/Auth";
 import myHistory from "../../react/history/History";
-
+import {Base64} from 'js-base64';
 // ########################## ACTIONS  ##########################
 
 const loginLoading = () => ({
@@ -21,7 +20,13 @@ export const login = (username, password) => {
     return async(dispatch) => {
         dispatch(loginLoading(username, password));
         try{
-            const response = await Auth.login(username, password);
+            const response = await fetch("http://localhost:8080/login", {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Basic ' + Base64.btoa(username+":"+password)
+                }
+            });
+
             if(response.ok) {
                 const data = await response.json();
                 console.log(data);

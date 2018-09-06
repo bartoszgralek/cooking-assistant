@@ -2,14 +2,13 @@ import React, {Component} from 'react';
 import connect from "react-redux/es/connect/connect";
 import {Loader} from "../loader/Loader";
 import './Recipes.css';
+import {Button, ButtonGroup} from "reactstrap";
 
 class Recipes extends Component{
 
-    componentDidMount() {
-        this.props.fetchRecipes();
+    async componentDidMount() {
+        await this.props.getRecipes();
     }
-
-
 
     render() {
         const recipeList = this.props.recipes.map(el =>
@@ -17,6 +16,10 @@ class Recipes extends Component{
                 return <tr key={el.id}>
                     <td>{el.id}</td>
                     <td style={{whiteSpace: 'nowrap'}}>{el.title}</td>
+                    <td><ButtonGroup>
+                        <Button color="primary">Edit</Button>
+                        <Button color="danger" onClick={() => this.props.deleteRecipeById(el.id)}>Delete</Button>
+                    </ButtonGroup></td>
                 </tr>
             }
         );
@@ -36,6 +39,7 @@ class Recipes extends Component{
                     <tr>
                         <th>id</th>
                         <th>title</th>
+                        <th>actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -58,14 +62,23 @@ function mapStateToProps(state){
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchRecipes: () => {
+        getRecipes: () => {
             dispatch({
-                type: 'FETCH',
+                type: 'GET',
                 payload: {
+                    reducer: 'RECIPES',
                     url: "/recipes",
-                    method: 'GET'
                 }
             });
+        },
+        deleteRecipeById: id => {
+            dispatch({
+                type: 'DELETE',
+                payload: {
+                    reducer: 'RECIPES',
+                    url: '/recipes/'+id
+                }
+            })
         }
     }
 };

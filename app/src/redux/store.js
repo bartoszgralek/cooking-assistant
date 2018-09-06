@@ -1,29 +1,41 @@
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import thunk from 'redux-thunk';
 import {recipesReducer} from "./domain/recipes";
-import {accessReducer} from "./domain/login";
+import {accessReducer} from "./domain/access";
 import {usersReducer} from "./domain/users";
 import {editUserReducer} from "./domain/editUser";
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
 import reduxReset from 'redux-reset'
 import {Base64} from "js-base64";
+import {navReducer} from "./domain/nav";
+import {modal} from "./domain/modal";
 
-const appReducer = combineReducers({ recipesReducer,auth: accessReducer, usersReducer, editUserReducer});
+const appReducer = combineReducers({nav: navReducer, recipesReducer,auth: accessReducer, usersReducer, editUserReducer, modal});
 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['auth']
+    whitelist: ['auth', 'nav']
 };
+
+const crudMethods = ["POST", "GET", "PUT", "DELETE"];
+
+const isCrud = method => crudMethods.includes(method);
 
 const requestMiddleware = store => next => async(action) => {
     console.log(action);
-  if(action.type === 'FETCH') {
+
+    if(isCrud(action.type)) {
+        const part = action.payload.reducer;
+
+      store.dispatch({
+          type: action.type+"_"+part+"_LOADING"
+      });
 
       try {
           const response = await fetch("http://localhost:8080"+action.payload.url, {
-              method: action.payload.method,
+              method: action.type,
               headers: {
                   'Content-Type': 'application/json',
                   'Authorization': 'Basic ' + Base64.btoa(store.getState().auth.user.username +":"+ store.getState().auth.user.password)
@@ -31,18 +43,15 @@ const requestMiddleware = store => next => async(action) => {
               body: action.payload.body
           });
 
-          const length = action.payload.url.length;
-          const part = action.payload.url.substring(1, length).toUpperCase();
-
           if(response.ok) {
               const data = await response.json();
               return next({
-                  type: "FETCH_"+part+"_SUCCESS",
+                  type: action.type+"_"+part+"_SUCCESS",
                   payload: data
               });
           }else {
               return next({
-                  type: "FETCH_"+part+"_FAILED"
+                  type: action.type+"_"+part+"_FAILED"
               });
           }
       }catch(err) {

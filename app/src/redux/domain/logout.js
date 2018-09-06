@@ -1,4 +1,3 @@
-import {persistor} from "../store";
 import myHistory from "../../react/history/History";
 
 const logoutStart = () => ({
@@ -13,6 +12,14 @@ const logoutFailed = (err) => ({
     type: 'USER_LOGOUT_FAILED',
     payload: err
 });
+
+export const logout = () => {
+    return dispatch => {
+        dispatch({type: 'RESET'});
+        localStorage.clear();
+        myHistory.push("/");
+    }
+};
 
 
 const initState = {

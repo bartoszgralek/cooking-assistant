@@ -2,29 +2,35 @@
 // ########################## ACTIONS  ##########################
 
 const recipesFetched = recipes => ({
-    type: "FETCH_RECIPES_SUCCESS",
+    type: "GET_RECIPES_SUCCESS",
     payload: recipes
 });
 
-const recipesFailed = () => ({type: 'FETCH_RECIPES_FAILED'});
+const recipesFailed = () => ({type: 'GET_RECIPES_FAILED'});
 
-const recipesLoading = () => ({type: "FETCH_RECIPES_LOADING"});
+const recipesLoading = () => ({type: "GET_RECIPES_LOADING"});
 
 // ########################## REDUCERS ##########################
 
 const initState = {
-    isLoading: true,
+    isLoading: false,
     recipes: [],
     error: false
 };
 
 export const recipesReducer = (state = initState, action) => {
     switch(action.type) {
-        case 'FETCH_RECIPES_LOADING':
+        case 'GET_RECIPES_LOADING':
             return {...state, isLoading: true};
-        case 'FETCH_RECIPES_SUCCESS':
+        case 'GET_RECIPES_SUCCESS':
             return {...state, recipes: action.payload, isLoading: false};
-        case 'FETCH_RECIPES_FAILED':
+        case 'GET_RECIPES_FAILED':
+            return {...state, error: true, isLoading: false};
+        case 'DELETE_RECIPES_LOADING':
+            return {...state, isLoading: true};
+        case 'DELETE_RECIPES_SUCCESS':
+            return {...state, recipes: state.recipes.filter(recipe => recipe.id !== action.payload), isLoading: false};
+        case 'DELETE_RECIPES_FAILED':
             return {...state, error: true, isLoading: false};
         default:
             return state;

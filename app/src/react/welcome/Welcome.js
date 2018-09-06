@@ -6,32 +6,29 @@ import SideNav, {Nav, NavHeader, NavIcon, NavItem, NavText, NavTitle, Toggle} fr
 import UserList from "../usersList/Users";
 import {FakeHome} from "../../FakeHome";
 import Recipes from "../recipesList/Recipes";
-import myHistory from "../history/History";
-import {persistor} from "../../redux/store";
+import {changeCard} from "../../redux/domain/nav";
+import {logout} from "../../redux/domain/logout";
 
 class Welcome extends Component {
     state = {
-        selected: 'home',
         expanded: false
     };
 
-    onSelect = async(selected) => {
+    onSelect = (selected) => {
         if(selected === 'logout') {
-            await this.props.logout();
-            localStorage.clear();
-            myHistory.push("/");
+            this.props.logout();
             return;
         }
-        this.setState({ selected: selected });
-        console.log("selected: " + this.state.selected);
+        this.props.changeCard(selected);
     };
+
     onToggle = (expanded) => {
 
         this.setState({ expanded: expanded });
     };
 
     renderMain() {
-        const {selected } = this.state;
+        const selected = this.props.card;
         switch(selected) {
             case 'home':
                 return <FakeHome/>;
@@ -43,12 +40,6 @@ class Welcome extends Component {
                 return <FakeHome/>;
         }
     };
-
-    // handleLogout = async() => {
-    //     await this.props.logout();
-    //     persistor.persist();
-    //     myHistory.push("/");
-    // };
 
 
     render() {
@@ -64,7 +55,7 @@ class Welcome extends Component {
                     <NavHeader expanded={expanded}>
                         <NavTitle>Menu</NavTitle>
                     </NavHeader>
-                    <Nav defaultSelected="home">
+                    <Nav defaultSelected={this.props.card}>
                         <NavItem eventKey="home">
                             <NavIcon>
                                 <i className="fas fa-home" style={{ fontSize: '1.75em' }} />
@@ -122,14 +113,9 @@ class Welcome extends Component {
 
 const mapStateToProps = state => {
   return {
-      admin: state.auth.user.role === 'ROLE_ADMIN'
+      admin: state.auth.user.role === 'ROLE_ADMIN',
+      card: state.nav.card
   }
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        logout: () => dispatch({type: 'RESET'})
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
+export default connect(mapStateToProps, {logout, changeCard})(Welcome);
