@@ -60,6 +60,9 @@ class NewUserModal extends React.Component {
                 role: this.state.role
             };
 
+            console.log("in put user: ");
+            console.log(user);
+
             this.props.dispatch({
                 type: 'PUT',
                 payload: {
@@ -107,8 +110,6 @@ class NewUserModal extends React.Component {
                 <Button color="primary" onClick={this.handleSubmit}>Create</Button>{' '}
                 <Button color="secondary" onClick={() => this.props.dispatch(hideModal())}>Cancel</Button>
             </ModalFooter>
-
-
         </Modal>
 
         );

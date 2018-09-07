@@ -81,7 +81,7 @@ const mapDispatchToProps = dispatch => {
             });
         },
         editUser: user => {
-            dispatch(showModal('EDIT_USER',{user, dispatch}));
+            dispatch(showModal('USER_MODAL',{user, mode: 'edit', dispatch}));
         },
         deleteUserById: id => {
             dispatch({

@@ -55,6 +55,17 @@ export const usersReducer = (state = initState, action) => {
             return {...state, modalLoading: false, auth_err: true};
         case 'POST_USERS_CONFIRMED':
             return {...state, modalCreated: false};
+        case 'PUT_USERS_LOADING':
+            return {...state, modalLoading: true};
+        case 'PUT_USERS_SUCCESS':
+            const index = state.users.findIndex(x => x.id === action.payload.id);
+            const newArray = state.users.slice();
+            newArray[index] = action.payload;
+            return {...state, modalLoading: false, modalCreated: true, users: newArray};
+        case 'PUT_USERS_FAILED':
+            return {...state, modalLoading: false, auth_err: true};
+        case 'PUT_USERS_CONFIRMED':
+            return {...state, modalCreated: false};
         default:
             return state;
     }
