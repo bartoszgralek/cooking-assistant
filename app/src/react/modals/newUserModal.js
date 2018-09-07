@@ -1,4 +1,4 @@
-import { hideModal } from '../../redux/domain/modal'
+import {hideModal, showModal} from '../../redux/domain/modal'
 import React from 'react';
 import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import {connect} from "react-redux";
@@ -12,13 +12,19 @@ class NewUserModal extends React.Component {
         this.state = {
             username: '',
             password: '',
-            role: 'USER',
-            error: null,
+            role: 'ROLE_USER',
+            error: null
         };
     }
 
-    validateForm() {
-        return this.state.username.length >= 3;
+    componentDidMount() {
+        if(this.props.mode === 'edit') {
+            this.setState({
+                username: this.props.user.username,
+                password: this.props.user.password,
+                role: this.props.user.role
+            })
+        }
     }
 
     handleChange = event => {
@@ -29,25 +35,49 @@ class NewUserModal extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        const user = {
-            username: this.state.username,
-            password: this.state.password
-        };
 
-        this.props.dispatch({
-            type: 'POST',
-            payload: {
-                reducer: 'USERS',
-                url: "/users",
-                body: JSON.stringify(user)
-            }
-        });
+
+        if (this.props.mode === 'new') {
+            const user = {
+                username: this.state.username,
+                password: this.state.password,
+                role: this.state.role
+            };
+
+            this.props.dispatch({
+                type: 'POST',
+                payload: {
+                    reducer: 'USERS',
+                    url: "/users",
+                    body: JSON.stringify(user)
+                }
+            });
+        }else {
+            const user = {
+                id: this.props.user.id,
+                username: this.state.username,
+                password: this.state.password,
+                role: this.state.role
+            };
+
+            this.props.dispatch({
+                type: 'PUT',
+                payload: {
+                    reducer: 'USERS',
+                    url: "/users",
+                    body: JSON.stringify(user)
+                }
+            });
+        }
     };
 
 
     render() {
         if(this.props.created) {
-            this.props.dispatch(hideModal());
+            if(this.props.mode === 'new')
+                this.props.dispatch(showModal('CONFIRM',{text: 'User has been created!' ,dispatch: this.props.dispatch}));
+            else
+                this.props.dispatch(showModal('CONFIRM',{text: 'User has been updated!' ,dispatch: this.props.dispatch}));
         }
 
         return (
@@ -66,8 +96,8 @@ class NewUserModal extends React.Component {
                     <FormGroup>
                         <Label for="exampleSelect">Select</Label>
                         <Input type="select" name="role" id="role" onChange={this.handleChange} value={this.state.role}>
-                            <option selected="selected" value="USER">USER</option>
-                            <option value="ADMIN">ADMIN</option>
+                            <option selected="selected" value="ROLE_USER">USER</option>
+                            <option value="ROLE_ADMIN">ADMIN</option>
                         </Input>
                     </FormGroup>
                 </Form>

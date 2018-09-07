@@ -1,6 +1,7 @@
 package com.gralek.shatee.web;
 
 import com.gralek.shatee.domain.User;
+import com.gralek.shatee.domain.UserTO;
 import com.gralek.shatee.repository.UserRepository;
 import com.gralek.shatee.security.SecurityService;
 import com.gralek.shatee.service.UserService;
@@ -34,19 +35,23 @@ public class AccessController {
     private UserRepository userRepository;
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ResponseEntity<User> registration(@Valid @RequestBody UserForm userForm, BindingResult bindingResult) {
-        userValidator.validate(userForm, bindingResult);
+    public ResponseEntity<User> registration(@Valid @RequestBody UserTO user, BindingResult bindingResult) {
+        userValidator.validate(user, bindingResult);
 
         if (bindingResult.hasErrors()) {
 
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        User newUser = userService.save(userForm);
+        // for extention
+        User newUser = new User();
+        newUser.setUsername(user.getUsername());
+        newUser.setPassword(user.getPassword());
+        newUser.setRole("ROLE_USER");
 
-        //securityService.autologin(newUser.getUsername(), newUser.getPassword());
+        User savedUser = userRepository.save(newUser);
 
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
 

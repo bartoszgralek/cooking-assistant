@@ -1,6 +1,7 @@
 package com.gralek.shatee.web;
 
 import com.gralek.shatee.domain.User;
+import com.gralek.shatee.domain.UserTO;
 import com.gralek.shatee.repository.UserRepository;
 import com.gralek.shatee.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +37,25 @@ public class UserController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteUserById(@PathVariable Long id) {
+        userRepository.deleteById(id);
+        return new ResponseEntity(id, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
-    public ResponseEntity<User> registration(@RequestBody UserForm userForm) {
+    public ResponseEntity<User> saveUser(@RequestBody UserTO userForm) {
         User newUser = userService.save(userForm);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping
+    public ResponseEntity<User> updateUser(@RequestBody UserTO user) {
+        User updatedUser = userService.save(user);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
 }

@@ -1,8 +1,8 @@
 package com.gralek.shatee.service;
 
 import com.gralek.shatee.domain.User;
+import com.gralek.shatee.domain.UserTO;
 import com.gralek.shatee.repository.UserRepository;
-import com.gralek.shatee.web.UserForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +12,12 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User save(UserForm user) {
+    public User save(UserTO user) {
         User newUser = new User();
+        newUser.setId(user.getId());
         newUser.setUsername(user.getUsername());
         newUser.setPassword(user.getPassword());
-        newUser.setRole("ROLE_USER");
+        newUser.setRole(user.getRole());
         return userRepository.save(newUser);
     }
 

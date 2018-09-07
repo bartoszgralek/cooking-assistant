@@ -3,10 +3,13 @@ import React from 'react';
 import {connect} from "react-redux";
 import {EditRecipeModal} from "./editRecipeModal";
 import NewUserModal from './newUserModal';
+import ConfirmModal from "./confirmModal";
+
 const MODAL_COMPONENTS = {
     'EDIT_USER': EditUserModal,
     'EDIT_RECIPE': EditRecipeModal,
-    'NEW_USER': NewUserModal
+    'USER_MODAL': NewUserModal,
+    'CONFIRM': ConfirmModal,
     /* other modals */
 };
 

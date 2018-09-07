@@ -31,6 +31,7 @@ class Users extends Component{
                     <td style={{whiteSpace: 'nowrap'}}>{el.role}</td>
                     <td>
                         <Button color="primary" onClick={() => this.props.editUser(el)} >Edit</Button>
+                        <Button color="danger" onClick={() => this.props.deleteUserById(el.id)} disabled={this.props.me.id === el.id}>Delete</Button>
                     </td>
                 </tr>
             }
@@ -63,7 +64,8 @@ function mapStateToProps(state){
     return {
         users: state.usersReducer.users,
         isLoading: state.usersReducer.isLoading,
-        auth_err: state.usersReducer.auth_err
+        auth_err: state.usersReducer.auth_err,
+        me: state.auth.user
     }
 }
 
@@ -81,8 +83,17 @@ const mapDispatchToProps = dispatch => {
         editUser: user => {
             dispatch(showModal('EDIT_USER',{user, dispatch}));
         },
+        deleteUserById: id => {
+            dispatch({
+                type: 'DELETE',
+                payload: {
+                    reducer: 'USERS',
+                    url: '/users/'+id
+                }
+            })
+        },
         newUser: () => {
-            dispatch(showModal('NEW_USER', {dispatch}))
+            dispatch(showModal('USER_MODAL', {dispatch, mode: 'new'}))
         }
     }
 };
