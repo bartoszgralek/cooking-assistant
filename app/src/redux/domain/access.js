@@ -41,12 +41,22 @@ export const login = (username, password) => {
     }
 };
 
+export const updateUser = user => {
+    return dispatch => {
+        dispatch({
+            type: 'UPDATE_USER',
+            payload: user
+        })
+    }
+};
+
 // ########################## REDUCERS ##########################
 
 const initState = {
     isLoading: false,
     user: undefined,
-    auth_err: false
+    auth_err: false,
+    card: 'home'
 };
 
 export const accessReducer = (state = initState, action) => {
@@ -57,6 +67,10 @@ export const accessReducer = (state = initState, action) => {
             return {...state, isLoading: false, user: action.payload};
         case 'LOGIN_FAILED':
             return {...state, isLoading: false, auth_err: action.payload};
+        case 'SET_NAV':
+            return {...state, card: action.payload};
+        case 'UPDATE_USER':
+            return state.user.id === action.payload.id ? {...state, user: action.payload} : state;
         default:
             return state;
 

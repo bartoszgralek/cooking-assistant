@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 import {recipesReducer} from "./domain/recipes";
 import {accessReducer} from "./domain/access";
 import {usersReducer} from "./domain/users";
-import {editUserReducer} from "./domain/editUser";
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
 import reduxReset from 'redux-reset'
@@ -11,7 +10,7 @@ import {Base64} from "js-base64";
 import {navReducer} from "./domain/nav";
 import {modal} from "./domain/modal";
 
-const appReducer = combineReducers({nav: navReducer, recipesReducer,auth: accessReducer, usersReducer, editUserReducer, modal});
+const appReducer = combineReducers({nav: navReducer, recipesReducer,auth: accessReducer, usersReducer, modal});
 
 const persistConfig = {
     key: 'root',

@@ -6,7 +6,7 @@ import './Users.css';
 import {Button} from "reactstrap";
 import ModalRoot from "../modals/rootModal";
 import {showModal} from "../../redux/domain/modal";
-import {LoadingDots} from "../modals/Dots";
+import {LoadingDots} from "../loader/Dots";
 
 class Users extends Component{
 
@@ -15,14 +15,6 @@ class Users extends Component{
     }
 
     render() {
-
-        if(this.props.isLoading){
-            return <Loader/>;
-        }
-        if(this.props.auth_err) {
-            return <h2>You are not authorized!</h2>;
-        }
-
         const userList = this.props.users.map(el =>
             {
                 return <tr key={el.id}>
@@ -36,6 +28,13 @@ class Users extends Component{
                 </tr>
             }
         );
+
+        if(this.props.isLoading){
+            return <Loader/>;
+        }
+        if(this.props.auth_err) {
+            return <h2>You are not authorized!</h2>;
+        }
 
         return (
             <div className="users">

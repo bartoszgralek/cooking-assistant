@@ -18,9 +18,9 @@ class Welcome extends Component {
     onSelect = (selected) => {
         if(selected === 'logout') {
             this.props.logout();
-            return;
+        }else {
+            this.props.changeCard(selected);
         }
-        this.props.changeCard(selected);
     };
 
     onToggle = (expanded) => {
@@ -112,7 +112,6 @@ class Welcome extends Component {
 
     }
 }
-
 const mapStateToProps = state => {
   return {
       admin: state.auth.user.role === 'ROLE_ADMIN',

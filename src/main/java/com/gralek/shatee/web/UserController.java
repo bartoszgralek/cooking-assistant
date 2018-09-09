@@ -32,9 +32,7 @@ public class UserController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
-        return optionalUser.isPresent() ?
-                new ResponseEntity<>(optionalUser.get(), HttpStatus.OK) :
-                new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return optionalUser.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

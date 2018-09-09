@@ -1,14 +1,12 @@
-import {EditUserModal} from '../../react/modals/editUserModal';
 import React from 'react';
 import {connect} from "react-redux";
-import {EditRecipeModal} from "./editRecipeModal";
-import NewUserModal from './newUserModal';
-import ConfirmModal from "./confirmModal";
+import UserModal from './UserModal';
+import ConfirmModal from "./ConfirmModal";
+import {RecipeModal} from "./RecipeModal";
 
 const MODAL_COMPONENTS = {
-    'EDIT_USER': EditUserModal,
-    'EDIT_RECIPE': EditRecipeModal,
-    'USER_MODAL': NewUserModal,
+    'USER_MODAL': UserModal,
+    'EDIT_RECIPE': RecipeModal,
     'CONFIRM': ConfirmModal,
     /* other modals */
 };

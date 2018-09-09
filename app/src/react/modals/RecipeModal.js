@@ -2,7 +2,7 @@ import { hideModal } from '../../redux/domain/modal'
 import React from 'react';
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 
-export const EditRecipeModal = ({ recipe, dispatch }) => (
+export const RecipeModal = ({ recipe, dispatch }) => (
     <Modal isOpen={true}>
         <ModalHeader>{recipe.title}</ModalHeader>
         <ModalBody>
