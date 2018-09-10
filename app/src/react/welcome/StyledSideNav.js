@@ -10,7 +10,7 @@ const NavHeader = styled.div`
     color: #fff;
     > * {
         color: inherit;
-        background-color: inherit;
+        background-color: ${Theme.base};
     }
 `;
 
@@ -19,6 +19,7 @@ const NavTitle = styled.div`
     font-size: 1.5em;
     padding-top: 20px;
     padding-left: 40px;
+    background-color: ${Theme.base};
 `;
 
 
@@ -38,6 +39,7 @@ StyledToggle.defaultProps = Toggle.defaultProps;
 // Nav
 const StyledNav = styled(Nav)`
     background-color: ${Theme.base};
+    height: 100vh;
     &&[class*="expanded--"] {
         [class*="sidenav-subnav--"] {
             > [class*="sidenav-subnavitem--"],

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import Home from './react/home/Home';
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,7 +23,7 @@ class Index extends Component {
                 <PersistGate loading={null} persistor={persistor}>
                     <Router history={myHistory}>
                         <Switch>
-                            <Route path='/' exact component={Home}/>
+                            <Route path='/' exact component={Login}/>
                             <Route path='/login' component={Login}/>
                             <Route path='/welcome' component={withAuthorization(Welcome)}/>
                         </Switch>

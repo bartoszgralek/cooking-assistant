@@ -1,6 +1,7 @@
 import React from 'react';
 import './react/style/Galery.css'
 import {Loader} from "./react/loader/Loader";
+import "./react/style/List.css";
 
 export default class Main extends React.Component {
     state = {
@@ -26,8 +27,8 @@ export default class Main extends React.Component {
         if(this.state.isLoading) {
             return <Loader/>;
         }
-        return <section id="photos">
+        return <div className="list"><section id="photos">
             {this.state.images.map(item => <img src={item}/>)}
-        </section>;
+        </section></div>;
     }
 }

@@ -10,6 +10,7 @@ import {logout} from "../../redux/domain/logout";
 import ModalRoot from "../modals/rootModal";
 import {Header} from "../header/Header";
 import Main from "../../FakeHome";
+import StickyBox from "react-sticky-box";
 
 class Welcome extends Component {
     state = {
@@ -49,64 +50,66 @@ class Welcome extends Component {
 
         return (
             <div>
-                <ModalRoot/>
-                <SideNav
-                    onSelect={this.onSelect}
-                    onToggle={this.onToggle}
-                >
-                    <Toggle />
-                    <NavHeader expanded={expanded}>
-                        <NavTitle>Menu</NavTitle>
-                    </NavHeader>
-                    <Nav defaultSelected={this.props.card}>
-                        <NavItem eventKey="home">
-                            <NavIcon>
-                                <i className="fas fa-home" style={{ fontSize: '1.75em' }} />
-                            </NavIcon>
-                            <NavText>
-                                Home
-                            </NavText>
-                        </NavItem>
-                        <NavItem eventKey="recipes">
-                            <NavIcon>
-                                <i className="fas fa-utensils" style={{ fontSize: '1.75em' }} />
-                            </NavIcon>
-                            <NavText>
-                                Recipes
-                            </NavText>
-                        </NavItem>
-                        <NavItem eventKey="favRecipes">
-                            <NavIcon>
-                                <i className="fas fa-heart" style={{ fontSize: '1.75em' }} />
-                            </NavIcon>
-                            <NavText>
-                                Favourites
-                            </NavText>
-                        </NavItem>
-                        {this.props.admin && <NavItem eventKey="users">
-                            <NavIcon>
-                                <i className="fas fa-users" style={{ fontSize: '1.75em' }} />
-                            </NavIcon>
-                            <NavText>
-                                Users
-                            </NavText>
-                        </NavItem>}
-                        <NavItem eventKey="logout" style={{position: 'absolute',width: '100%',bottom:0}}>
-                            <NavIcon>
-                                <i className="fas fa-sign-out-alt" style={{ fontSize: '1.75em' }} />
-                            </NavIcon>
-                            <NavText>
-                                Logout
-                            </NavText>
-                        </NavItem>
-                    </Nav>
-                </SideNav>
 
+                <ModalRoot/>
+                <StickyBox bottom={false}>
+                    <SideNav
+                        onSelect={this.onSelect}
+                        onToggle={this.onToggle}
+                    >
+                        <Toggle />
+                        <NavHeader expanded={expanded}>
+                            <NavTitle>Menu</NavTitle>
+                        </NavHeader>
+                        <Nav defaultSelected={this.props.card}>
+                            <NavItem eventKey="home">
+                                <NavIcon>
+                                    <i className="fas fa-home" style={{ fontSize: '1.75em' }} />
+                                </NavIcon>
+                                <NavText>
+                                    Home
+                                </NavText>
+                            </NavItem>
+                            <NavItem eventKey="recipes">
+                                <NavIcon>
+                                    <i className="fas fa-utensils" style={{ fontSize: '1.75em' }} />
+                                </NavIcon>
+                                <NavText>
+                                    Recipes
+                                </NavText>
+                            </NavItem>
+                            <NavItem eventKey="favRecipes">
+                                <NavIcon>
+                                    <i className="fas fa-heart" style={{ fontSize: '1.75em' }} />
+                                </NavIcon>
+                                <NavText>
+                                    Favourites
+                                </NavText>
+                            </NavItem>
+                            {this.props.admin && <NavItem eventKey="users">
+                                <NavIcon>
+                                    <i className="fas fa-users" style={{ fontSize: '1.75em' }} />
+                                </NavIcon>
+                                <NavText>
+                                    Users
+                                </NavText>
+                            </NavItem>}
+                            <NavItem eventKey="logout" style={{position: 'relative',width: '100%',bottom:0}}>
+                                <NavIcon>
+                                    <i className="fas fa-sign-out-alt" style={{ fontSize: '1.75em' }} />
+                                </NavIcon>
+                                <NavText>
+                                    Logout
+                                </NavText>
+                            </NavItem>
+                        </Nav>
+                    </SideNav>
+                </StickyBox>
                 <div
                     style={{
                         backgroundColor: '#414141',
                         marginLeft: expanded ? 240 : 64,
-                        height: '100vh'
+                        padding: '3em',
                     }}
                 >
                     <Header/>
