@@ -3,12 +3,13 @@ import "./Welcome.css";
 import {connect} from "react-redux";
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import SideNav, {Nav, NavHeader, NavIcon, NavItem, NavText, NavTitle, Toggle} from './StyledSideNav';
-import UserList from "../usersList/Users";
-import {FakeHome} from "../../FakeHome";
-import Recipes from "../recipesList/Recipes";
+import UserList from "../user/UserList";
+import RecipeList from "../recipe/RecipeList";
 import {changeCard} from "../../redux/domain/nav";
 import {logout} from "../../redux/domain/logout";
 import ModalRoot from "../modals/rootModal";
+import {Header} from "../header/Header";
+import Main from "../../FakeHome";
 
 class Welcome extends Component {
     state = {
@@ -32,13 +33,13 @@ class Welcome extends Component {
         const selected = this.props.card;
         switch(selected) {
             case 'home':
-                return <FakeHome/>;
+                return <Main/>;
             case 'recipes':
-                return <Recipes/>;
+                return <RecipeList/>;
             case 'users':
                 return <UserList/>;
             default:
-                return <FakeHome/>;
+                return <Main/>;
         }
     };
 
@@ -100,11 +101,15 @@ class Welcome extends Component {
                         </NavItem>
                     </Nav>
                 </SideNav>
+
                 <div
                     style={{
+                        backgroundColor: '#414141',
                         marginLeft: expanded ? 240 : 64,
+                        height: '100vh'
                     }}
                 >
+                    <Header/>
                     {this.renderMain()}
                 </div>
             </div>

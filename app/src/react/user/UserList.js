@@ -2,13 +2,12 @@ import React, {Component} from 'react';
 import connect from "react-redux/es/connect/connect";
 import {Loader} from "../loader/Loader";
 
-import './Users.css';
+import './UserList.css';
 import {Button} from "reactstrap";
-import ModalRoot from "../modals/rootModal";
 import {showModal} from "../../redux/domain/modal";
-import {LoadingDots} from "../loader/Dots";
+import '../style/List.css';
 
-class Users extends Component{
+class UserList extends Component{
 
     componentDidMount() {
         this.props.getUsers();
@@ -37,7 +36,7 @@ class Users extends Component{
         }
 
         return (
-            <div className="users">
+            <div className="list">
                 <h2>User list</h2>
                 <table className="table">
                     <thead>
@@ -97,4 +96,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(Users);
+export default connect(mapStateToProps,mapDispatchToProps)(UserList);

@@ -7,5 +7,7 @@ public interface UserService {
 
     User save(UserTO user);
 
+    User update(UserTO user);
+
     User findByUsername(String username);
 }

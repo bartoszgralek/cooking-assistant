@@ -6,6 +6,7 @@ import '../loader/dots.css';
 import Loader from 'react-dots-loader'
 import 'react-dots-loader/index.css'
 import {updateUser} from "../../redux/domain/access";
+import './UserModal.css';
 
 class UserModal extends React.Component {
     constructor() {
@@ -136,9 +137,9 @@ class UserModal extends React.Component {
                 </Form>
             </ModalBody>
             <ModalFooter>
-                <Loader visible={this.props.loading} style={{margin: 'auto'}} color="#ffd1dc"/>
-                <Button color="primary" onClick={this.handleSubmit}>{this.props.mode === 'new' ? 'Create' : 'Update'}</Button>{' '}
-                <Button color="secondary" onClick={() => this.props.dispatch(hideModal())}>Cancel</Button>
+                <Loader visible={this.props.loading} style={{margin: 'auto'}} color="#056571"/>
+                <Button color="primary" onClick={this.handleSubmit} disabled={this.props.loading}>{this.props.mode === 'new' ? 'Create' : 'Update'}</Button>{' '}
+                <Button color="secondary" onClick={() => this.props.dispatch(hideModal())} disabled={this.props.loading}>Cancel</Button>
             </ModalFooter>
         </Modal>
 

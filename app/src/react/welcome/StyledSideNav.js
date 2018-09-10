@@ -3,10 +3,6 @@ import SideNav, {Nav, NavIcon, NavItem, NavText, Toggle} from '@trendmicro/react
 import Theme from "../colors/index";
 
 
-const red = "#DB3D44";
-
-
-
 const NavHeader = styled.div`
     display: ${props => (props.expanded ? 'block' : 'none')};
     white-space: nowrap;
@@ -69,13 +65,16 @@ const StyledNav = styled(Nav)`
         > [class*="navitem--"] {
             background-color: inherit;
             color: #EFAAAD;
+            
             [class*="navicon--"] {
                 &, > * {
+                    vertical-align: middle
                     color: ${Theme.white};
                 }
             }
             [class*="navtext--"] {
                 &, > * {
+                    font-size: 1.3em;
                     color: ${Theme.white};
                 }
             }

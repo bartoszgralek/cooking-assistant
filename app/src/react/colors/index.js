@@ -1,8 +1,10 @@
 const Theme = {
-    base: '#77dd77',
-    base_lighter: "#90dd90",
-    base_darker: "#4add4b",
-    pink: "#ffd1dc",
+    base_lighter: "#ff8173",
+    base: '#FF6A5C',
+    base_darker: "#ff4f3f",
+    dark: "#414141",
+    fresh: "#CCDFCB",
+    teal: "#056571",
     white: "#eee"
 };
 

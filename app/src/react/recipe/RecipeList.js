@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import connect from "react-redux/es/connect/connect";
 import {Loader} from "../loader/Loader";
-import './Recipes.css';
+import '../style/List.css';
 import {Button, ButtonGroup} from "reactstrap";
 import {showModal} from "../../redux/domain/modal";
 
-class Recipes extends Component{
+class RecipeList extends Component{
 
     async componentDidMount() {
         await this.props.getRecipes();
@@ -33,7 +33,7 @@ class Recipes extends Component{
             return <h2>You are not authorized!</h2>;
         }
         return (
-            <div className="recipes">
+            <div className="list">
                 <h2>Recipe list</h2>
                 <table className="table">
                     <thead>
@@ -87,4 +87,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Recipes);
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeList);

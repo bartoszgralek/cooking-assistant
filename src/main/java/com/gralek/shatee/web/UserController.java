@@ -52,7 +52,7 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping
     public ResponseEntity<User> updateUser(@RequestBody UserTO user) {
-        User updatedUser = userService.save(user);
+        User updatedUser = userService.update(user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
