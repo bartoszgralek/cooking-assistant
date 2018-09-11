@@ -19,12 +19,6 @@ public class DatabaseInitializer implements CommandLineRunner {
     private RecipeRepository recipeRepository;
 
     @Autowired
-    private StepRepository stepRepository;
-
-    @Autowired
-    private ToolItemRepository toolItemRepository;
-
-    @Autowired
     private ToolRepository toolRepository;
 
 

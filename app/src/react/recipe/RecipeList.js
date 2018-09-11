@@ -4,17 +4,25 @@ import {Loader} from "../loader/Loader";
 import '../style/List.css';
 import {Button, ButtonGroup} from "reactstrap";
 import {showModal} from "../../redux/domain/modal";
+import {changeCard} from "../../redux/domain/nav";
+import RecipeDetails from "./RecipeDetails";
 
 class RecipeList extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            recipe: undefined
+        }
+    }
+
 
     async componentDidMount() {
         await this.props.getRecipes();
     }
 
     render() {
-        const recipeList = this.props.recipes.map(el =>
-            {
-                return <tr key={el.id}>
+        const recipeList = this.props.recipes.map(el => {
+                return <tr key={el.id} onClick={() => alert("Hello! I am an alert box!!")}>
                     <td>{el.id}</td>
                     <td style={{whiteSpace: 'nowrap'}}>{el.title}</td>
                     <td><ButtonGroup>
@@ -26,12 +34,13 @@ class RecipeList extends Component{
         );
 
 
-        if(this.props.isLoading){
+        if (this.props.isLoading) {
             return <Loader/>
         }
-        if(this.props.error) {
+        if (this.props.error) {
             return <h2>You are not authorized!</h2>;
         }
+
         return (
             <div className="list">
                 <h2>Recipe list</h2>
@@ -50,7 +59,6 @@ class RecipeList extends Component{
             </div>
         );
     }
-
 }
 
 function mapStateToProps(state){
@@ -83,7 +91,11 @@ const mapDispatchToProps = dispatch => {
         },
         editRecipe: recipe => {
             dispatch(showModal('EDIT_RECIPE',{recipe, dispatch}));
-        }
+        },
+        changeCard: (card) => dispatch({
+            type: 'SET_NAV',
+            payload: card
+        })
     }
 };
 

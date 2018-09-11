@@ -1,7 +1,9 @@
 package com.gralek.shatee;
 
+import com.gralek.shatee.utils.file.FileStorageProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
@@ -13,6 +15,9 @@ import java.util.Arrays;
 import java.util.Collections;
 
 @SpringBootApplication
+@EnableConfigurationProperties({
+		FileStorageProperties.class
+})
 public class ShateeApplication {
 
 	public static void main(String[] args) {

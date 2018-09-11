@@ -8,9 +8,10 @@ import RecipeList from "../recipe/RecipeList";
 import {changeCard} from "../../redux/domain/nav";
 import {logout} from "../../redux/domain/logout";
 import ModalRoot from "../modals/rootModal";
-import {Header} from "../header/Header";
+import Header from "../header/Header";
 import Main from "../../FakeHome";
 import StickyBox from "react-sticky-box";
+import RecipeDetails from "../recipe/RecipeDetails";
 
 class Welcome extends Component {
     state = {
@@ -39,6 +40,8 @@ class Welcome extends Component {
                 return <RecipeList/>;
             case 'users':
                 return <UserList/>;
+            case 'recipe_details':
+                return <RecipeDetails/>;
             default:
                 return <Main/>;
         }
@@ -109,7 +112,8 @@ class Welcome extends Component {
                     style={{
                         backgroundColor: '#414141',
                         marginLeft: expanded ? 240 : 64,
-                        padding: '3em',
+                        paddingTop: '180px',
+                        height: '100vh',
                     }}
                 >
                     <Header/>

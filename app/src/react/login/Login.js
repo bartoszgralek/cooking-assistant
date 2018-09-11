@@ -7,6 +7,7 @@ import {access, login} from "../../redux/domain/access";
 
 import {persistor} from "../../redux/store";
 import {Header} from "../header/Header";
+import {Top} from "../header/Top";
 
 class Login extends Component {
     constructor() {
@@ -44,7 +45,7 @@ class Login extends Component {
         return (
             <div className="around">
 
-                <Header/>
+             <Top/>
             <Container className="Login">
                 <h2>Sign In</h2>
                 {this.state.error}

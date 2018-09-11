@@ -20,3 +20,9 @@ spring:
         base-path: /api
   messages:
     basename: validation
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 20MB
+      max-request-size: 25MB

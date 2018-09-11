@@ -3,6 +3,7 @@ import './Home.css';
 import {Button, Jumbotron,} from 'reactstrap';
 import myHistory from '../history/History';
 import ModalRoot from "../modals/rootModal";
+import RecipeList from "../recipe/RecipeList";
 
 export default class Home extends Component {
 
@@ -17,6 +18,7 @@ export default class Home extends Component {
                     <p className="lead">
                         <Button color="primary" onClick={() => myHistory.push("/welcome")}>Sign In</Button>
                     </p>
+                    <RecipeList/>
                 </Jumbotron>
             </div>
         );

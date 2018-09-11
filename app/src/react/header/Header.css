@@ -1,13 +1,48 @@
-.header {
-    margin:auto;
+.container-fluid {
     text-align: center;
-    width: 100%;
-    margin-bottom: 3em;
+    padding: 1.5em;
+    position:fixed;
+    top:0;
+    width:100%;
+    z-index:100;
+    background-color: #414141;
+    height: 180px;
 }
 
-.header h2 {
+.container-fluid {
+    padding: 1em;
+    color: #fff;
+}
+
+.container-fluid .row [class*='col-'] {
+    margin-bottom: auto;
+    margin-top: auto;
+}
+
+.container-fluid .row [class*='col-']:hover {
+
+}
+
+.flex-container {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+}
+
+.flex-container:hover {
+    color: #FF6A5C;
+    cursor: pointer;
+}
+
+
+.container-fluid .row [class*='col-'] h2 {
     font: 400 130px/0.8 'Cookie', Helvetica, sans-serif;
     color: #fff;
     text-shadow: 4px 4px 3px rgba(0,0,0,0.1);
+}
+.container-fluid .row [class*='col-'] h2:hover {
+    color: #FF6A5C;
+    cursor: pointer;
 }
 

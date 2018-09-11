@@ -1,6 +1,7 @@
 package com.gralek.shatee.web;
 
 import com.gralek.shatee.domain.Recipe;
+import com.gralek.shatee.domain.RecipeTO;
 import com.gralek.shatee.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,9 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/recipes")
@@ -21,8 +22,9 @@ public class RecipeController {
 
 
     @GetMapping
-    public ResponseEntity<List<Recipe>> getRecipes() {
-        return new ResponseEntity<>((ArrayList<Recipe>)recipeRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<RecipeTO>> getRecipes() {
+        List<RecipeTO> list = recipeRepository.findAll().stream().map(recipe -> new RecipeTO(recipe.getId(), recipe.getTitle())).collect(Collectors.toList());
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
