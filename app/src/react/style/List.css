@@ -2,12 +2,28 @@
     margin: auto;
     width: 80%;
     padding: 2em;
-    background: #fff;
+    background: #414141;
     border-radius: 25px;
+    color: white;
+}
+
+.list > table {
+    text-align: center;
+}
+
+.list .table td {
+    vertical-align: middle;
+}
+
+.list .table td:last-child, th:last-child {
+    text-align: right;
+    vertical-align: middle;
 }
 
 .list .table tr {
+    color: black;
     border: 2px solid #FF6A5C;
+    background: #fff;
 }
 
 .list .table tr th {

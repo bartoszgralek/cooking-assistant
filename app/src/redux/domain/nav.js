@@ -10,7 +10,7 @@ export const changeCard = card => {
 };
 
 const initState = {
-    card: 'home'
+    card: '/welcome/home'
 };
 
 export const navReducer = (state = initState, action) => {

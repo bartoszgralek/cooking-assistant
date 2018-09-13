@@ -11,7 +11,10 @@ import {Provider} from "react-redux";
 import Welcome from "./react/welcome/Welcome";
 import withAuthorization from './react/utils/RouteUtils';
 import { PersistGate } from 'redux-persist/integration/react'
-import {Header} from "./react/header/Header";
+import Header from "./react/header/Header";
+import RecipeList from "./react/recipe/RecipeList";
+import FakeHome from "./FakeHome";
+import "./react/style/Scroll.css";
 
 window.store = store;
 window.persistor = persistor;
@@ -24,9 +27,8 @@ class Index extends Component {
                 <PersistGate loading={null} persistor={persistor}>
                     <Router history={myHistory}>
                         <Switch>
-                            <Route path='/' exact component={Home}/>
-                            <Route path='/login' component={Login}/>
-                            <Route path='/welcome' component={withAuthorization(Welcome)}/>
+                            <Route exact path="/" component={Login}/>
+                            <Route path="/welcome" component={Header}/>
                         </Switch>
                     </Router>
                 </PersistGate>
