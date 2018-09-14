@@ -9,11 +9,13 @@ import {logout} from "../../redux/domain/logout";
 import {connect} from "react-redux";
 import ModalRoot from "../modals/rootModal";
 import {changeCard} from "../../redux/domain/nav";
+import RecipeDetails from "../recipe/RecipeDetails";
+import {Switch} from "react-router";
 
 class Header extends React.Component {
 
     state = {
-        active: '/welcome'
+        active: this.props.card
     };
 
     navigate = (url) => {
@@ -23,30 +25,29 @@ class Header extends React.Component {
 
     render() {
         return (
-            <Router history={myHistory}>
             <div>
                 <ModalRoot/>
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-2">
-                            <div className={this.props.card === '/welcome/favourites' ? "flex-container-active" : "flex-container"} onClick={() => this.navigate("/welcome/favourites")}>
+                            <div className={this.props.card === '/home/favourites' ? "flex-container-active" : "flex-container"} onClick={() => this.navigate("/home/favourites")}>
                                 <i className="fas fa-heart" style={{ fontSize: '2em' }} />
                                 Favourites
                             </div>
                         </div>
                         <div className="col-md-2">
-                            <div className={this.props.card === '/welcome/recipes' ? "flex-container-active" : "flex-container"} onClick={() => this.navigate("/welcome/recipes")}>
+                            <div className={this.props.card === '/home/recipes' ? "flex-container-active" : "flex-container"} onClick={() => this.navigate("/home/recipes")}>
                                 <i className="fas fa-utensils" style={{ fontSize: '2em' }} />
                                 Recipes
                             </div>
                         </div>
                         <div className="col-md-4">
-                                <div className={this.props.card === '/welcome' ? "flex-container-active" : "flex-container"} onClick={() => this.navigate("/welcome")}>
+                                <div className={this.props.card === '/home' ? "flex-container-active" : "flex-container"} onClick={() => this.navigate("/home")}>
                                     <h2>•&nbsp;Yokka&nbsp;•</h2>
                                 </div>
                         </div>
                         {this.props.admin &&<div className="col-md-2">
-                            <div className={this.props.card === '/welcome/users' ? "flex-container-active" : "flex-container"} onClick={() => this.navigate("/welcome/users")}>
+                            <div className={this.props.card === '/home/users' ? "flex-container-active" : "flex-container"} onClick={() => this.navigate("/home/users")}>
                                 <i className="fas fa-users" style={{ fontSize: '2em' }} />
                                 Users
                             </div>
@@ -60,12 +61,14 @@ class Header extends React.Component {
                     </div>
                 </div>
                 <div className="content">
-                    <Route exact path="/welcome" component={FakeHome}/>
-                    <Route path="/welcome/recipes" component={RecipeList}/>
-                    <Route path="/welcome/users" component={UserList}/>
+                    <Switch>
+                        <Route exact path="/home" component={FakeHome}/>
+                        <Route exact path="/home/recipes" component={RecipeList}/>
+                        <Route path="/home/recipes/:id" component={RecipeDetails}/>
+                        <Route path="/home/users" component={UserList}/>
+                    </Switch>
                 </div>
             </div>
-            </Router>
         );
     }
 }

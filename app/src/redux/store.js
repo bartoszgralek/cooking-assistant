@@ -9,8 +9,9 @@ import reduxReset from 'redux-reset'
 import {Base64} from "js-base64";
 import {navReducer} from "./domain/nav";
 import {modal} from "./domain/modal";
+import {recipeDetailsReducer} from "./domain/recipeDetails";
 
-const appReducer = combineReducers({nav: navReducer, recipesReducer,auth: accessReducer, usersReducer, modal});
+const appReducer = combineReducers({nav: navReducer, recipesReducer,auth: accessReducer, usersReducer, modal,recipeDetailsReducer});
 
 const persistConfig = {
     key: 'root',

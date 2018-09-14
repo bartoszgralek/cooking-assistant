@@ -29,7 +29,7 @@ class Index extends Component {
                     <Router history={myHistory}>
                         <Switch>
                             <Route exact path="/" component={Login}/>
-                            <Route path="/welcome" component={withAuthorization(Header)}/>
+                            <Route path="/home" component={withAuthorization(Header)}/>
                         </Switch>
                     </Router>
                 </PersistGate>

@@ -7,14 +7,9 @@ import {showModal} from "../../redux/domain/modal";
 import {changeCard} from "../../redux/domain/nav";
 import RecipeDetails from "./RecipeDetails";
 import {NotAuth} from "../loader/Unauth";
+import myHistory from "../history/History";
 
 class RecipeList extends Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            recipe: undefined
-        }
-    }
 
 
     async componentDidMount() {
@@ -23,7 +18,7 @@ class RecipeList extends Component{
 
     render() {
         const recipeList = this.props.recipes.map(el => {
-                return <tr key={el.id} onClick={() => alert("Hello! I am an alert box!!")}>
+                return <tr key={el.id} onClick={() => myHistory.push("/home/recipes/"+el.id)}>
                     <td>{el.id}</td>
                     <td style={{whiteSpace: 'nowrap'}}>{el.title}</td>
                     <td><ButtonGroup>
