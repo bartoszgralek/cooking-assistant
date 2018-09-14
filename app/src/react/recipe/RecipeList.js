@@ -22,8 +22,8 @@ class RecipeList extends Component{
                     <td>{el.id}</td>
                     <td style={{whiteSpace: 'nowrap'}}>{el.title}</td>
                     <td><ButtonGroup>
-                        <Button color="primary" onClick={() => this.props.editRecipe(el)}>Edit</Button>
-                        <Button color="danger" onClick={() => this.props.deleteRecipeById(el.id)}>Delete</Button>
+                        <Button color="primary" onClick={(ev) => {this.props.editRecipe(el);ev.stopPropagation();}}>Edit</Button>
+                        <Button color="danger" onClick={(ev) => {this.props.deleteRecipeById(el.id);ev.stopPropagation();}}>Delete</Button>
                     </ButtonGroup></td>
                 </tr>
             }
