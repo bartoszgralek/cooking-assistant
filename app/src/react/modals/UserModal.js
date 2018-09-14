@@ -117,11 +117,11 @@ class UserModal extends React.Component {
                     <div>
                         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                             <Label for="Password" className="mr-sm-2">New password</Label>
-                            <Input type="password" name="password" id="password1" placeholder="Password" onChange={this.handleChange} value={this.state.password1} />
+                            <Input type="password" name="password" id="password1" placeholder="Leave blank if no change" onChange={this.handleChange} value={this.state.password1} />
                         </FormGroup>
                         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                             <Label for="Password" className="mr-sm-2">Repeat password</Label>
-                            <Input type="password" name="password" id="password2" placeholder="Password" onChange={this.handleChange} value={this.state.password2} />
+                            <Input type="password" name="password" id="password2" placeholder="Repeat password" onChange={this.handleChange} value={this.state.password2} />
                         </FormGroup>
                         {this.validatePasswords() === 1 && <i className="fas fa-check" style={{color: "green"}}> Password match!</i>}
                         {this.validatePasswords() === -1 && <i className="fas fa-times" style={{color: "red"}}> Passwords don't match</i>}

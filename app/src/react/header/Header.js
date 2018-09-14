@@ -13,7 +13,7 @@ import {changeCard} from "../../redux/domain/nav";
 class Header extends React.Component {
 
     state = {
-        active: '/welcome/home'
+        active: '/welcome'
     };
 
     navigate = (url) => {
@@ -41,7 +41,7 @@ class Header extends React.Component {
                             </div>
                         </div>
                         <div className="col-md-4">
-                                <div className={this.props.card === '/welcome/home' ? "flex-container-active" : "flex-container"} onClick={() => this.navigate("/welcome/home")}>
+                                <div className={this.props.card === '/welcome' ? "flex-container-active" : "flex-container"} onClick={() => this.navigate("/welcome")}>
                                     <h2>•&nbsp;Yokka&nbsp;•</h2>
                                 </div>
                         </div>
@@ -60,7 +60,7 @@ class Header extends React.Component {
                     </div>
                 </div>
                 <div className="content">
-                    <Route path="/welcome/home" component={FakeHome}/>
+                    <Route exact path="/welcome" component={FakeHome}/>
                     <Route path="/welcome/recipes" component={RecipeList}/>
                     <Route path="/welcome/users" component={UserList}/>
                 </div>

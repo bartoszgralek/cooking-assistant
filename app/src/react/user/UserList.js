@@ -6,6 +6,7 @@ import './UserList.css';
 import {Button} from "reactstrap";
 import {showModal} from "../../redux/domain/modal";
 import '../style/List.css';
+import {NotAuth} from "../loader/Unauth";
 
 class UserList extends Component{
 
@@ -32,7 +33,7 @@ class UserList extends Component{
             return <Loader/>;
         }
         if(this.props.auth_err) {
-            return <h2>You are not authorized!</h2>;
+            return <NotAuth/>;
         }
 
         return (

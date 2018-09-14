@@ -15,6 +15,7 @@ import Header from "./react/header/Header";
 import RecipeList from "./react/recipe/RecipeList";
 import FakeHome from "./FakeHome";
 import "./react/style/Scroll.css";
+import {NotAuth} from "./react/loader/Unauth";
 
 window.store = store;
 window.persistor = persistor;
@@ -28,7 +29,7 @@ class Index extends Component {
                     <Router history={myHistory}>
                         <Switch>
                             <Route exact path="/" component={Login}/>
-                            <Route path="/welcome" component={Header}/>
+                            <Route path="/welcome" component={withAuthorization(Header)}/>
                         </Switch>
                     </Router>
                 </PersistGate>

@@ -6,6 +6,7 @@ import {Button, ButtonGroup} from "reactstrap";
 import {showModal} from "../../redux/domain/modal";
 import {changeCard} from "../../redux/domain/nav";
 import RecipeDetails from "./RecipeDetails";
+import {NotAuth} from "../loader/Unauth";
 
 class RecipeList extends Component{
     constructor(props) {
@@ -35,10 +36,10 @@ class RecipeList extends Component{
 
 
         if (this.props.isLoading) {
-            return <Loader/>
+            return <Loader/>;
         }
         if (this.props.error) {
-            return <h2>You are not authorized!</h2>;
+            return <NotAuth/>;
         }
 
         return (

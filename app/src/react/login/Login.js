@@ -20,7 +20,7 @@ class Login extends Component {
     }
 
     validateForm() {
-        return this.state.username.length >= 3;
+        return this.state.username.length >= 3 || this.state.username.length <= 1;
     }
 
     handleChange = event => {
@@ -39,16 +39,16 @@ class Login extends Component {
     };
 
     render() {
-        if(this.props.isLoading) {
-            return <Loader/>
-        }
+
         return (
             <div className="around">
 
              <Top/>
+                {this.props.isLoading ? <Loader/> :
             <Container className="Login">
+
                 <h2>Sign In</h2>
-                {this.state.error}
+                {<div style={{color: 'red'}}>{this.state.error}</div>}
                 <Form className="form" onSubmit={this.handleSubmit}>
                     <Col>
                         <FormGroup>
@@ -59,13 +59,10 @@ class Login extends Component {
                                 id="username"
                                 placeholder="john_doe"
                                 value={this.state.username}
-                                valid={this.validateForm()}
                                 invalid={!this.validateForm()}
                                 onChange={this.handleChange}
                             />
-                            <FormFeedback valid>
-                                That's a tasty looking username you've got there.
-                            </FormFeedback>
+
                             <FormFeedback>
                                 Uh oh! Username must be at least 3 characters long.
                             </FormFeedback>
@@ -92,7 +89,8 @@ class Login extends Component {
                         </Button>
                     </Col>
                 </Form>
-            </Container>
+
+            </Container>}
                 </div>
         );
     }

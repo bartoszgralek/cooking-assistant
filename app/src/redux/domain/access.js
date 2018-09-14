@@ -31,7 +31,7 @@ export const login = (username, password) => {
                 const data = await response.json();
                 console.log(data);
                 dispatch(loginSuccess({...data, password: password}));
-                myHistory.push("/welcome/home");
+                myHistory.push("/welcome");
             }else{
                 dispatch(loginFailed());
             }
