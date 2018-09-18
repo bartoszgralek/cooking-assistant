@@ -14,6 +14,8 @@
   margin-top: 15px;
 }
 
+
+
 @media screen and (min-width: 992px) {
   .navbar {
     height: 130px;
@@ -27,19 +29,24 @@
   .navbar-light .navbar-nav .nav-link {
     padding-right: 75px;
   }
-  #nav-left {
-    padding-left: 30px;
-  }
 
   .navbar-nav {
     display:table;
-    width:80%;
+    width:90%;
     margin: 0;
   }
   .navbar-nav > li {
     float:none;
     display:table-cell;
     text-align:center;
+
   }
 
+  .flex-container {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    color: black;
+  }
 }

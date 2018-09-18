@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import {FaHome} from "react-icons/fa";
 
 class App extends Component {
   render() {
@@ -14,10 +15,16 @@ class App extends Component {
         <div className="collapse navbar-collapse" id="nav-left">
           <ul className="nav navbar-nav">
             <li className="nav-item">
-              <a className="nav-link" href="#">Link</a>
+              <div className="flex-container">
+                <i className="fas fa-heart" style={{ fontSize: '2em' }} />
+                Favourites
+              </div>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Link</a>
+              <div className="flex-container">
+                <i className="fas fa-heart" style={{ fontSize: '2em' }} />
+                Favourites
+              </div>
             </li>
           </ul>
         </div>
@@ -29,10 +36,16 @@ class App extends Component {
         <div className="collapse navbar-collapse">
           <ul className="nav navbar-nav ml-auto">
             <li className="nav-item">
-              <a className="nav-link" href="#">Link</a>
+              <div className="flex-container">
+                <i className="fas fa-heart" style={{ fontSize: '2em' }} />
+                Favourites
+              </div>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Link</a>
+              <div className="flex-container">
+                <i className="fas fa-heart" style={{ fontSize: '2em' }} />
+                Favourites
+              </div>
             </li>
           </ul>
         </div>
