@@ -30,7 +30,7 @@ export const login = (username, password) => {
             if(response.ok) {
                 const data = await response.json();
                 console.log(data);
-                dispatch(loginSuccess({...data, password: password}));
+                dispatch(loginSuccess({...data, password: password})); //password field doesn't come back in JSON
                 myHistory.push("/home");
             }else{
                 dispatch(loginFailed());

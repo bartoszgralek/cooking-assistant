@@ -8,6 +8,7 @@ export default (ProtectedRoute) => {
         render () {
             // Return a Loading component while the isLoading function is 'true'
             if (!this.props.user) {
+                console.log("no user");
                 return <Redirect to="/"/>
             }
             // Pass the received 'props' and created functions to the ProtectedRoute component
