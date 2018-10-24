@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    Me</br>
+    <video id="live" width="320" height="240" autoplay="autoplay"
+           style="display: inline;"></video>
+    <div style="visibility: hidden; width: 0; height: 0;">
+        <canvas width="320" id="canvas" height="240"></canvas>
+    </div>
+    From Server</br>
+    <div>
+        <img id="target" style="display: inline;" />
+    </div>
+    <button onclick="connect()">Connect</button>
+    <button onclick="disconnect()">Connect</button>
+    <button onclick="startRecording()">Start</button>
+    <button onclick="stopRecording()">Stop</button>
+    <script>
+        var ws;
+        function connect() {
+            ws = new WebSocket("ws://localhost:8080/speech");
+            ws.onopen = function () {
+                console.log("Openened connection to websocket");
+            };
+        }
+
+        function disconnect() {
+            if (ws != null) {
+                ws.close();
+            }
+            console.log("Disconnected");
+        }
+
+        navigator.mediaDevices.getUserMedia({
+            audio: {
+                echoCancellation: true,
+                channelCount: 1,
+                sampleRate: {
+                    ideal: 16000
+                },
+                sampleSize: 16
+            }
+        }).then(handleSuccess);
+
+        var recording = false;
+
+        window.startRecording = function() {
+            recording = true;
+        };
+
+        window.stopRecording = function() {
+            recording = false;
+            ws.close();
+        };
+
+        function handleSuccess(stream) {
+            var context = new AudioContext();
+            var source = context.createMediaStreamSource(stream);
+            var processor = context.createScriptProcessor(2048, 1, 1);
+
+            source.connect(processor);
+            processor.connect(context.destination);
+            var MAX_INT = Math.pow(2, 16 - 1) - 1;
+
+            processor.addEventListener('audioprocess', function(event) {
+                if(!recording) return;
+                console.log ('recording');
+                var left = event.inputBuffer.getChannelData(0);
+                ws.send(Int16Array.from(left.map(function(n) {
+                    return n * MAX_INT;
+                })));
+
+            });
+        }
+
+        function convertoFloat32ToInt16(buffer) {
+            var l = buffer.length;
+            var buf = new Int16Array(l);
+
+            while (l--) {
+                buf[l] = buffer[l]*0xFFFF;    //convert to 16 bit
+            }
+            return buf.buffer;
+        }
+    </script>
+</div>
+</body>
+</html>
