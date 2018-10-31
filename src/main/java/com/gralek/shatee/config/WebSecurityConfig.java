@@ -11,10 +11,8 @@ import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.FilterInvocation;
@@ -22,8 +20,8 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 import org.springframework.stereotype.Component;
 
 @Component
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+//@EnableWebSecurity
+//@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -35,38 +33,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(User.PASSWORD_ENCODER);
     }
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-////        http
-////                .authorizeRequests()
-////                    .antMatchers("/registration").anonymous()
-////                    .anyRequest().authenticated()
-////                    .and()
-////                .httpBasic()
-////                    .and()
-////                .csrf().disable();
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/registration","/","/home").permitAll()
-//                .antMatchers("/admin").hasRole("ADMIN")
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin().successHandler(customizeAuthenticationSuccessHandler)
-//                .loginPage("/login")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll();
-//
-//        http.exceptionHandling().accessDeniedPage("/403");
-//        http.headers().frameOptions().disable();
-//    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
-            .authorizeRequests().antMatchers("/registration").permitAll()
+            .authorizeRequests().antMatchers("/registration", "/speech").permitAll()
             .antMatchers("/h2").hasRole("ADMIN")
             .anyRequest().authenticated()
             .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
