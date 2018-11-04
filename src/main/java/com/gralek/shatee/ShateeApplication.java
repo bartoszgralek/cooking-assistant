@@ -11,6 +11,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -22,6 +23,8 @@ public class ShateeApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ShateeApplication.class, args);
+		SpeechWebSocket speechWebSocket = new SpeechWebSocket(8887);
+		speechWebSocket.start();
 	}
 
 	@Bean
