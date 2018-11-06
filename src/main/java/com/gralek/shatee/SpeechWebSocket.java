@@ -6,10 +6,10 @@ import com.google.cloud.speech.v1.*;
 import com.google.cloud.texttospeech.v1.*;
 import com.google.gson.Gson;
 import com.google.protobuf.ByteString;
-import com.gralek.shatee.domain.Step;
-import com.gralek.shatee.handler.Constraints;
-import com.gralek.shatee.nlp.IntentTrainer;
-import com.gralek.shatee.nlp.IntentTrainerResponse;
+import com.gralek.shatee.utils.Constraints;
+import com.gralek.shatee.nlp.ClientContext;
+import com.gralek.shatee.nlp.CommandResponder;
+import com.gralek.shatee.nlp.intent.IntentTrainer;
 import com.gralek.shatee.repository.RecipeRepository;
 import com.gralek.shatee.utils.ApplicationContextUtils;
 import org.apache.commons.io.IOUtils;
@@ -28,7 +28,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public class SpeechWebSocket extends WebSocketServer implements ApiStreamObserver<StreamingRecognizeResponse>{
 
@@ -42,8 +41,9 @@ public class SpeechWebSocket extends WebSocketServer implements ApiStreamObserve
     private WebSocket client;
 
     private RecipeRepository recipeRepository;
-
     private IntentTrainer intentTrainer;
+    private ClientContext clientContext;
+    private CommandResponder commandResponder;
 
 
     public SpeechWebSocket(int port) {
@@ -53,6 +53,7 @@ public class SpeechWebSocket extends WebSocketServer implements ApiStreamObserve
 
         this.recipeRepository = (RecipeRepository) applicationContext.getBean("recipeRepository");
         this.intentTrainer = (IntentTrainer) applicationContext.getBean("intentTrainer");
+        this.commandResponder = (CommandResponder) applicationContext.getBean("commandResponder");
         System.out.println(intentTrainer.categorizeSentence("Could you please tell me what salt is?"));
     }
 
@@ -63,6 +64,9 @@ public class SpeechWebSocket extends WebSocketServer implements ApiStreamObserve
     @Override
     public void onOpen(WebSocket webSocket, ClientHandshake clientHandshake) {
         client = webSocket;
+        clientContext = new ClientContext();
+        clientContext.setRecipeId(1L);
+        clientContext.setStep(1L);
         System.out.println("Connection established " + webSocket.getRemoteSocketAddress() + " " + clientHandshake.getResourceDescriptor());
     }
 
@@ -195,12 +199,9 @@ public class SpeechWebSocket extends WebSocketServer implements ApiStreamObserve
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else if(transcript.trim().equals("recipe")) {
-            sendTextToClient(recipeRepository.findById(1L).get()
-                    .getSteps()
-                        .stream()
-                        .map(Step::getDescription)
-                        .collect(Collectors.joining(",")));
+        }else {
+            String responseInText = commandResponder.response(transcript.trim(), clientContext);
+            sendTextToClient(responseInText);
         }
     }
 
@@ -213,6 +214,8 @@ public class SpeechWebSocket extends WebSocketServer implements ApiStreamObserve
     }
 
     private void sendTextToClient(String message) {
+        if(message == null || message.isEmpty())
+            return;
         SynthesisInput input = SynthesisInput.newBuilder()
                 .setText(message)
                 .build();

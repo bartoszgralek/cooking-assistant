@@ -9,6 +9,8 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+
 @Component
 public class DatabaseInitializer implements CommandLineRunner {
 
@@ -36,9 +38,13 @@ public class DatabaseInitializer implements CommandLineRunner {
         Recipe r1 = new Recipe("Chicken curry");
         Recipe r2 = new Recipe("Spaghetti bolognese");
         Recipe r3 = new Recipe("Dumplings");
-
         Tool tool1 = new Tool("Whisk");
         Tool tool2 = new Tool("Grater");
+
+        Ingredient i1 = new Ingredient("meat", 500, Unit.g);
+        Ingredient i2 = new Ingredient("tomato sauce", 500, Unit.ml);
+        Ingredient i3 = new Ingredient("olive oil", 20, Unit.ml);
+        Ingredient i4 = new Ingredient("Vanilla stick", 2, Unit.szt);
 
         toolRepository.save(tool1);
         toolRepository.save(tool2);
@@ -67,6 +73,13 @@ public class DatabaseInitializer implements CommandLineRunner {
 
         r1.getTools().add(t1);
         r1.getTools().add(t2);
+
+        i1.setRecipe(r1);
+        i2.setRecipe(r1);
+        i3.setRecipe(r1);
+        i4.setRecipe(r1);
+
+        r1.setIngredients(Arrays.asList(i1, i2, i3, i4));
 
         SecurityContextHolder.getContext().setAuthentication(
                 new UsernamePasswordAuthenticationToken("admin", "doesn't matter",

@@ -1,4 +1,4 @@
-package com.gralek.shatee.nlp;
+package com.gralek.shatee.nlp.intent;
 
 import opennlp.tools.doccat.DocumentSample;
 import opennlp.tools.tokenize.WhitespaceTokenizer;

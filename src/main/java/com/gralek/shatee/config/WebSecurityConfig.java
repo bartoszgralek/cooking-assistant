@@ -11,8 +11,10 @@ import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.FilterInvocation;
@@ -20,8 +22,8 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 import org.springframework.stereotype.Component;
 
 @Component
-//@EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -37,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
-            .authorizeRequests().antMatchers("/registration", "/speech").permitAll()
+            .authorizeRequests().antMatchers("/registration").permitAll()
             .antMatchers("/h2").hasRole("ADMIN")
             .anyRequest().authenticated()
             .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())

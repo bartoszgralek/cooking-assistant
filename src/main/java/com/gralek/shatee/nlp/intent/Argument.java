@@ -1,4 +1,4 @@
-package com.gralek.shatee.nlp;
+package com.gralek.shatee.nlp.intent;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -93,11 +93,18 @@
 			<version>2.7.3</version>
 		</dependency>
 
+		<!-- json things -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.8.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180813</version>
+		</dependency>
+
 
 		<!-- https://mvnrepository.com/artifact/org.java-websocket/Java-WebSocket -->
 		<dependency>

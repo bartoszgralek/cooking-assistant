@@ -1,4 +1,4 @@
-package com.gralek.shatee.nlp;
+package com.gralek.shatee.nlp.intent;
 
 import opennlp.tools.doccat.DoccatFactory;
 import opennlp.tools.doccat.DoccatModel;
@@ -9,7 +9,6 @@ import opennlp.tools.tokenize.Tokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.util.*;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -95,7 +94,11 @@ public class IntentTrainer {
             }
         }
 
-        return new IntentTrainerResponse(action, args);
+        IntentTrainerResponse response = new IntentTrainerResponse(action, args); // to-do delete this
+
+        System.out.println("Recognized intent response: " + response);
+
+        return response;
     }
 
     public static void main(String[] args) throws IOException {
