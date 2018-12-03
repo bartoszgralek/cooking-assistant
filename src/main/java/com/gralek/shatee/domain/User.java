@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString(exclude = {"password", "favouriteRecipes", "createdRecipes"})
+@ToString
 @Entity
 public class User {
 
@@ -23,6 +23,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ToString.Exclude
     private Long id;
 
     @NotNull
@@ -34,14 +35,17 @@ public class User {
     @JsonIgnore
     @NotNull
 //    @Size(min = 8)
+    @ToString.Exclude
     private String password;
 
     @JsonIgnore
     @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @ToString.Exclude
     private Set<Recipe> favouriteRecipes = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "author", cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @ToString.Exclude
     private Set<Recipe> createdRecipes = new HashSet<>();
 
     public User() {}

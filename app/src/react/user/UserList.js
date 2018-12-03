@@ -6,7 +6,7 @@ import './UserList.css';
 import {Button} from "reactstrap";
 import {showModal} from "../../redux/domain/modal";
 import '../style/List.css';
-import {NotAuth} from "../loader/Unauth";
+import {NotAuth} from "../../../../../navbar/src/components/Unauth";
 
 class UserList extends Component{
 

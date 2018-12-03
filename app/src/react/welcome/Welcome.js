@@ -11,7 +11,7 @@ import ModalRoot from "../modals/rootModal";
 import Header from "../header/Header";
 import Main from "../../FakeHome";
 import StickyBox from "react-sticky-box";
-import RecipeDetails from "../recipe/RecipeDetails";
+import RecipeDetails from "../../../../../navbar/src/components/RecipeDetails";
 
 class Welcome extends Component {
     state = {
