@@ -4,9 +4,7 @@ import {Loader} from "../loader/Loader";
 import '../style/List.css';
 import {Button, ButtonGroup} from "reactstrap";
 import {showModal} from "../../redux/domain/modal";
-import {changeCard} from "../../redux/domain/nav";
-import RecipeDetails from "./RecipeDetails";
-import {NotAuth} from "../loader/Unauth";
+import {NotAuth} from "../../../../../navbar/src/components/Unauth";
 import myHistory from "../history/History";
 
 class RecipeList extends Component{

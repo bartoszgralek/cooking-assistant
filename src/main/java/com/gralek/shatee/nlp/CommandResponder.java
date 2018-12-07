@@ -1,11 +1,16 @@
 package com.gralek.shatee.nlp;
 
+import com.gralek.shatee.domain.Ingredient;
+import com.gralek.shatee.domain.Recipe;
 import com.gralek.shatee.domain.Step;
 import com.gralek.shatee.domain.Unit;
+import com.gralek.shatee.nlp.decorator.Decorator;
+import com.gralek.shatee.nlp.decorator.IngredientsDecorator;
+import com.gralek.shatee.nlp.decorator.StepsDecorator;
+import com.gralek.shatee.nlp.decorator.ToolsDecorator;
 import com.gralek.shatee.nlp.intent.Argument;
 import com.gralek.shatee.nlp.intent.IntentTrainer;
 import com.gralek.shatee.nlp.intent.IntentTrainerResponse;
-import com.gralek.shatee.repository.RecipeRepository;
 import com.gralek.shatee.utils.JSONUtils;
 import lombok.NoArgsConstructor;
 import org.json.JSONObject;
@@ -22,35 +27,62 @@ public class CommandResponder {
     @Autowired
     private IntentTrainer intentTrainer;
 
-    @Autowired
-    private RecipeRepository recipeRepository;
-
     public String response(String message, ClientContext clientContext) {
         IntentTrainerResponse response = intentTrainer.categorizeSentence(message);
         try {
             switch (response.getAction()) {
                 case "list":
                     String component = findInArgs(response.getArgs(), "component");
-                    return listComponent(component, clientContext.getRecipeId());
-
+                    return listComponent(component, clientContext.getRecipe());
                 case "definition":
                     String ingredient = findInArgs(response.getArgs(), "ingredient");
                     return defineComponent(ingredient);
-
                 case "next":
-                    break;
-
+                    return nextStep(clientContext);
+                case "current":
+                    return currentStep(clientContext);
                 case "quantity":
-                    break;
-
+                    String ingredient_2 = findInArgs(response.getArgs(), "ingredient");
+                    return quantityForProduct(ingredient_2, clientContext);
                 default:
                     break;
             }
         } catch (NoTypeInArgumentListException e) {
-            return "I do not under stand what you've said";
+            return "I do not understand what you've said";
         }
-        return null;
+        return "";
     }
+
+    private String currentStep(ClientContext clientContext) {
+        int currentStep = clientContext.getCurrentStep();
+
+        try {
+            Step step = clientContext.getRecipe().getSteps().get(currentStep);
+            clientContext.setCurrentStep(currentStep + 1);
+
+            return "Current step is: @pause@ " + step.getDescription();
+        }catch(IndexOutOfBoundsException e) {
+            clientContext.setCurrentStep(0);
+            return "You are out of steps. Counter will now reset for you.";
+        }
+    }
+
+    private String nextStep(ClientContext clientContext) {
+        int nextStep = clientContext.getCurrentStep() + 1;
+
+        try {
+            Step step = clientContext.getRecipe().getSteps().get(nextStep);
+            clientContext.setCurrentStep(nextStep);
+
+            return "The next step is: @pause@" + step.getDescription();
+        }catch(IndexOutOfBoundsException e) {
+            clientContext.setCurrentStep(0);
+            return "You are out of steps. Counter will now reset for you.";
+        }
+    }
+
+
+
 
     public static void main(String[] args) {
         CommandResponder commandResponder = new CommandResponder();
@@ -59,12 +91,45 @@ public class CommandResponder {
 
     }
 
-    private String listComponent(String component, Long recipeId) {
+    private String quantityForProduct(String ingredient, ClientContext clientContext) throws NoTypeInArgumentListException {
+
+        List<Ingredient> ingredients = clientContext.getRecipe().getIngredients();
+        Optional<Ingredient> found = ingredients.stream().filter(i -> i.getName().equals(ingredient)).findFirst();
+
+        try {
+            Ingredient ing = found.get();
+            return String.format("%s @pause@ %s %s", ing.getName(),ing.getQuantity(),ing.getUnit());
+        }catch (NoSuchElementException e){
+            throw new NoTypeInArgumentListException();
+        }
+    }
+
+    private String listComponent(String component, Recipe recipe) {
+
+        Decorator decorator;
+
         switch (component) {
             case "steps":
-                return recipeRepository.findById(recipeId).get()
-                        .getSteps().stream().map(Step::getDescription)
-                        .collect(Collectors.joining(","));
+                decorator = new StepsDecorator();
+                List<String> steps =
+                        recipe
+                                .getSteps().stream().map(Step::getDescription)
+                                .collect(Collectors.toList());
+                return decorator.decorate(steps);
+            case "tools":
+                decorator = new ToolsDecorator();
+                List<String> tools =
+                        recipe
+                                .getTools().stream().map(toolItem -> toolItem.getTool().getName())
+                                .collect(Collectors.toList());
+                return decorator.decorate(tools);
+            case "ingredients":
+                decorator = new IngredientsDecorator();
+                List<String> ingredients =
+                        recipe
+                                .getIngredients().stream().map(Ingredient::toString)
+                                .collect(Collectors.toList());
+                return decorator.decorate(ingredients);
             default:
                 return "";
         }
@@ -91,7 +156,9 @@ public class CommandResponder {
         JSONObject number = pages.getJSONObject((String) iteratorObj.next());
         String description = number.getString("extract");
 
-        return description.substring(0, description.indexOf("\n")); // take only first paragraph
+        int paragraphIndex = description.indexOf("\n");
+
+        return paragraphIndex != -1 ? description.substring(0, description.indexOf("\n")) : description;
     }
 
 
@@ -106,7 +173,7 @@ public class CommandResponder {
     private String findInArgs(List<Argument> args, String element) throws NoTypeInArgumentListException {
         Optional<Argument> optional = args.stream().filter(el -> el.getType().equals(element)).findFirst();
 
-        if(optional.isPresent()) {
+        if(optional.isPresent() && !optional.get().getName().isEmpty()) {
             return optional.get().getName();
         }else {
             throw new NoTypeInArgumentListException();

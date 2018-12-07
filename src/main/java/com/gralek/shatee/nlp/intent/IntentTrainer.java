@@ -26,7 +26,6 @@ public class IntentTrainer {
 
     public IntentTrainer() throws IOException {
 
-        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
         File trainingDirectory = new File("./src/main/resources/nlp/train");
         String[] slots = {"component", "ingredient"};
 

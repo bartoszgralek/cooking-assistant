@@ -2,10 +2,7 @@ package com.gralek.shatee.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -33,4 +30,8 @@ public class Ingredient {
 
     private Ingredient() {} //for database purposes
 
+    @Override
+    public String toString() {
+        return String.format("%s %s %s", name, quantity, unit);
+    }
 }

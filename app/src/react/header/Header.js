@@ -9,7 +9,7 @@ import {logout} from "../../redux/domain/logout";
 import {connect} from "react-redux";
 import ModalRoot from "../modals/rootModal";
 import {changeCard} from "../../redux/domain/nav";
-import RecipeDetails from "../recipe/RecipeDetails";
+import RecipeDetails from "../../../../../navbar/src/components/RecipeDetails";
 import {Switch} from "react-router";
 
 class Header extends React.Component {

@@ -3,13 +3,11 @@ package com.gralek.shatee.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
-@ToString
 @Entity
 public class ToolItem {
 
@@ -28,4 +26,8 @@ public class ToolItem {
 
     public ToolItem() {}
 
+    @Override
+    public String toString() {
+        return quantity + " " + tool;
+    }
 }

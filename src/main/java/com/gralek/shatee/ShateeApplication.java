@@ -1,5 +1,6 @@
 package com.gralek.shatee;
 
+import com.gralek.shatee.speech.SpeechWebSocket;
 import com.gralek.shatee.utils.file.FileStorageProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,7 +12,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -32,7 +32,7 @@ public class ShateeApplication {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowCredentials(true);
-		config.setAllowedOrigins(Arrays.asList("http://localhost:3000","http://localhost:63342"));
+		config.setAllowedOrigins(Arrays.asList("http://localhost:3000","http://localhost:63342","http://localhost:3001"));
 		config.setAllowedMethods(Collections.singletonList("*"));
 		config.setAllowedHeaders(Collections.singletonList("*"));
 		source.registerCorsConfiguration("/**", config);

@@ -2,7 +2,6 @@ package com.gralek.shatee.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +11,6 @@ import java.util.Objects;
 
 @Getter
 @Setter
-@ToString
 @Entity
 public class Tool {
 
@@ -41,5 +39,10 @@ public class Tool {
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

@@ -1,0 +1,41 @@
+.small-menu-classname ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+}
+
+.small-menu-classname li a {
+    display: block;
+    color: #000;
+    text-decoration: none;
+}
+
+.small-menu-classname li a:hover {
+    background-color: #555;
+    color: white;
+}
+.large-menu-classname ul {
+    background-color: #111;
+    padding: 0;
+    color: white
+}
+
+.large-menu-classname li {
+    display: inline;
+    list-style-type: none;
+    margin: 0;
+}
+
+.large-menu-classname li a {
+    color: #FFF;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 20px;
+    display: inline-block;
+}
+
+.active {
+    background-color: #0099FF;
+}

@@ -17,6 +17,7 @@ public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ToString.Exclude
     private Long id;
 
     @NotNull
@@ -33,6 +34,7 @@ public class Recipe {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "favouriteRecipes" ,cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @ToString.Exclude
     private Set<User> users = new HashSet<>();
 
     @ManyToOne
@@ -64,6 +66,14 @@ public class Recipe {
     private void detachRecipeFromUsers() {
         users.stream().forEach(user -> user.getFavouriteRecipes().remove(this));
 
+    }
+
+    public RecipeTO transform() {
+        return new RecipeTO(
+                this.id,
+                this.title,
+                this.author.getUsername()
+        );
     }
 
 }

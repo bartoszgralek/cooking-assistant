@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gralek.shatee.utils;
+package com.gralek.shatee.speech;
 
 /**
  * POJO to hold JSON configuration from the client.
  */
 public class Constraints {
-  public int sampleRate;
+    public int sampleRate;
+    public long recipeId;
 }

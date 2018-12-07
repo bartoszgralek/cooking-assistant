@@ -23,7 +23,7 @@ public class RecipeController {
 
     @GetMapping
     public ResponseEntity<List<RecipeTO>> getRecipes() {
-        List<RecipeTO> list = recipeRepository.findAll().stream().map(recipe -> new RecipeTO(recipe.getId(), recipe.getTitle())).collect(Collectors.toList());
+        List<RecipeTO> list = recipeRepository.findAll().stream().map(Recipe::transform).collect(Collectors.toList());
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
@@ -37,8 +37,8 @@ public class RecipeController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteRecipeById(@PathVariable Long id) {
+    public ResponseEntity<Long> deleteRecipeById(@PathVariable Long id) {
         recipeRepository.deleteById(id);
-        return new ResponseEntity(id, HttpStatus.OK);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 }

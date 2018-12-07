@@ -1,5 +1,7 @@
 package com.gralek.shatee.web;
 
+import com.google.cloud.speech.v1.*;
+import com.google.protobuf.ByteString;
 import com.gralek.shatee.domain.User;
 import com.gralek.shatee.domain.UserTO;
 import com.gralek.shatee.repository.UserRepository;
@@ -12,12 +14,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
 
 @RestController
 public class AccessController {
@@ -61,6 +64,51 @@ public class AccessController {
     public ResponseEntity<User> login(Authentication auth) {
         User loggedUser = userRepository.findByUsername(auth.getName());
         return new ResponseEntity<>(loggedUser, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @RequestMapping(value = "/speech", method = RequestMethod.POST)
+    public void speech(@RequestParam("file") MultipartFile file, @RequestParam("sampleRate") int sampleRate) throws IOException {
+        System.out.println("incoming message ... " + file.getSize() + "bytes -- sampleRate" + sampleRate);
+        byte[] bytes = file.getBytes();
+        FileOutputStream fos = new FileOutputStream("MyAudio.wav");
+        fos.write(bytes);
+        fos.close();
+        performRecogniton(bytes, sampleRate);
+    }
+
+    private void performRecogniton(byte[] data, int sampleRate) throws IOException {
+        try (SpeechClient speechClient = SpeechClient.create()) {
+
+            // The path to the audio file to transcribe
+//            String fileName = "./resources/audio.raw";
+//
+//            // Reads the audio file into memory
+//            Path path = Paths.get(fileName);
+//            byte[] data = Files.readAllBytes(path);
+            ByteString audioBytes = ByteString.copyFrom(data);
+
+            // Builds the sync recognize request
+            RecognitionConfig config = RecognitionConfig.newBuilder()
+                    .setEncoding(RecognitionConfig.AudioEncoding.LINEAR16)
+                    .setSampleRateHertz(sampleRate)
+                    .setLanguageCode("en-US")
+                    .build();
+            RecognitionAudio audio = RecognitionAudio.newBuilder()
+                    .setContent(audioBytes)
+                    .build();
+
+            // Performs speech recognition on the audio file
+            RecognizeResponse response = speechClient.recognize(config, audio);
+            List<SpeechRecognitionResult> results = response.getResultsList();
+
+            for (SpeechRecognitionResult result : results) {
+                // There can be several alternative transcripts for a given chunk of speech. Just use the
+                // first (most likely) one here.
+                SpeechRecognitionAlternative alternative = result.getAlternativesList().get(0);
+                System.out.printf("Transcription: %s%n", alternative.getTranscript());
+            }
+        }
     }
 
 }
