@@ -35,9 +35,10 @@ public class DatabaseInitializer implements CommandLineRunner {
         userRepository.save(u1);
         userRepository.save(u2);
 
-        Recipe r1 = new Recipe("Chicken curry");
-        Recipe r2 = new Recipe("Spaghetti bolognese");
-        Recipe r3 = new Recipe("Dumplings");
+        Recipe r1 = new Recipe("Chicken curry","http://localhost:8080/downloadFile/curry.jpg_3901085492817033069");
+        Recipe r2 = new Recipe("Spaghetti bolognese","http://localhost:8080/downloadFile/bolognese.jpg_8931257340728891798");
+        Recipe r3 = new Recipe("Dumplings", "http://localhost:8080/downloadFile/dumplings.jpg_1975114512590872766");
+        Recipe r4 = new Recipe("Shakshuka", "http://localhost:8080/downloadFile/shakshuka.jpg_9039782523778522453");
         Tool tool1 = new Tool("Whisk");
         Tool tool2 = new Tool("Grater");
 
@@ -93,6 +94,9 @@ public class DatabaseInitializer implements CommandLineRunner {
 
         r3.setAuthor(u1);
         r3 = recipeRepository.save(r3);
+
+        r4.setAuthor(u1);
+        r4 = recipeRepository.save(r4);
 
 
 

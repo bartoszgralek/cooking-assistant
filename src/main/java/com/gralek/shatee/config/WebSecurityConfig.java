@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
-            .authorizeRequests().antMatchers("/registration").permitAll()
+            .authorizeRequests().antMatchers("/registration","/downloadFile/*").permitAll()
             .antMatchers("/h2").hasRole("ADMIN")
             .anyRequest().authenticated()
             .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())

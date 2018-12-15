@@ -23,6 +23,8 @@ public class Recipe {
     @NotNull
     private String title;
 
+    private String picture;
+
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Step> steps = new ArrayList<>();
 
@@ -62,6 +64,11 @@ public class Recipe {
         this.title = title;
     }
 
+    public Recipe(String title, String picture) {
+        this.title = title;
+        this.picture = picture;
+    }
+
     @PreRemove
     private void detachRecipeFromUsers() {
         users.stream().forEach(user -> user.getFavouriteRecipes().remove(this));
@@ -72,7 +79,8 @@ public class Recipe {
         return new RecipeTO(
                 this.id,
                 this.title,
-                this.author.getUsername()
+                this.author.getUsername(),
+                this.picture
         );
     }
 

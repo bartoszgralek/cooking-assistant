@@ -10,4 +10,6 @@ public interface UserService {
     User update(UserTO user);
 
     User findByUsername(String username);
+
+    User addRecipeToFavourites(User user, Long recipeId);
 }

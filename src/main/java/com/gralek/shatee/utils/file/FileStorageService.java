@@ -13,11 +13,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Random;
 
 @Service
 public class FileStorageService {
 
     private final Path fileStorageLocation;
+
+    private Random random = new Random();
 
     @Autowired
     public FileStorageService(FileStorageProperties fileStorageProperties) {
@@ -31,7 +34,7 @@ public class FileStorageService {
         }
     }
 
-    public String storeFile(MultipartFile file) {
+    public String storeFile(MultipartFile file) throws FileStorageException {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
@@ -40,6 +43,11 @@ public class FileStorageService {
             if(fileName.contains("..")) {
                 throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
             }
+
+            Long sufix = random.nextLong();
+            sufix = sufix < 0 ? sufix * (-1) : sufix ;
+
+            fileName = fileName.concat("_"+sufix);
 
             // Copy file to the target location (Replacing existing file with the same name)
             Path targetLocation = this.fileStorageLocation.resolve(fileName);

@@ -58,7 +58,6 @@ public class CommandResponder {
 
         try {
             Step step = clientContext.getRecipe().getSteps().get(currentStep);
-            clientContext.setCurrentStep(currentStep + 1);
 
             return "Current step is: @pause@ " + step.getDescription();
         }catch(IndexOutOfBoundsException e) {
@@ -156,9 +155,9 @@ public class CommandResponder {
         JSONObject number = pages.getJSONObject((String) iteratorObj.next());
         String description = number.getString("extract");
 
-        int paragraphIndex = description.indexOf("\n");
+        int paragraphIndex = description.indexOf(".", description.indexOf(".") + 1);
 
-        return paragraphIndex != -1 ? description.substring(0, description.indexOf("\n")) : description;
+        return paragraphIndex != -1 ? description.substring(0, paragraphIndex+1) : description;
     }
 
 

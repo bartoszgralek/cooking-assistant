@@ -20,7 +20,6 @@ public class RecipeController {
     @Autowired
     private RecipeRepository recipeRepository;
 
-
     @GetMapping
     public ResponseEntity<List<RecipeTO>> getRecipes() {
         List<RecipeTO> list = recipeRepository.findAll().stream().map(Recipe::transform).collect(Collectors.toList());
@@ -30,9 +29,9 @@ public class RecipeController {
     @GetMapping("/{id}")
     public ResponseEntity<Recipe> getRecipeById(@PathVariable Long id) {
         Optional<Recipe> optionalRecipe = recipeRepository.findById(id);
-        return optionalRecipe.isPresent() ?
-                new ResponseEntity<>(optionalRecipe.get(), HttpStatus.OK) :
-                new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return optionalRecipe
+                .map(recipe -> new ResponseEntity<>(recipe, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

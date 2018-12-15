@@ -14,4 +14,5 @@ public class RecipeTO {
     private Long id;
     private String title;
     private String author;
+    private String picture;
 }

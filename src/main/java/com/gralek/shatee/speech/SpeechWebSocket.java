@@ -4,9 +4,6 @@ import org.apache.commons.io.IOUtils;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
-import sun.audio.AudioData;
-import sun.audio.AudioDataStream;
-import sun.audio.AudioPlayer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -72,7 +69,7 @@ public class SpeechWebSocket extends WebSocketServer{
         System.out.println("Connection closed " + webSocket.getRemoteSocketAddress());
         synchronized (clients) {
             for(SpeechClient client : clients) {
-                if(client.equals(webSocket)) {
+                if(client.getClient().equals(webSocket)) {
                     client.close();
                     clients.remove(client);
 
@@ -84,12 +81,6 @@ public class SpeechWebSocket extends WebSocketServer{
     public static void main(String[] args) throws IOException {
         InputStream in = SpeechWebSocket.class.getResourceAsStream("/output.wav");
         byte[] data = IOUtils.toByteArray(in);
-
-        AudioData audiodata = new AudioData(data);
-        // Create an AudioDataStream to play back
-        AudioDataStream audioStream = new AudioDataStream(audiodata);
-        // Play the sound
-        AudioPlayer.player.start(audioStream);
 
     }
 }
