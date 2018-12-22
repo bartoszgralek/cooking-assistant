@@ -93,11 +93,7 @@ public class IntentTrainer {
             }
         }
 
-        IntentTrainerResponse response = new IntentTrainerResponse(action, args); // to-do delete this
-
-        System.out.println("Recognized intent response: " + response);
-
-        return response;
+        return new IntentTrainerResponse(action, args);
     }
 
     public static void main(String[] args) throws IOException {

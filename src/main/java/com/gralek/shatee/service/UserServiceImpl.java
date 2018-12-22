@@ -49,7 +49,10 @@ UserServiceImpl implements UserService {
         Optional<Recipe> recipe = recipeRepository.findById(recipeId);
         User finalUser = user;
 
-        recipe.ifPresent(r -> finalUser.getFavouriteRecipes().add(r));
+        recipe.ifPresent(r -> {
+            finalUser.getFavouriteRecipes().add(r);
+            r.getUsers().add(finalUser);
+        });
         user = userRepository.save(user);
         return user;
     }

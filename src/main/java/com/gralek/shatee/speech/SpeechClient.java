@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import com.google.protobuf.ByteString;
 import com.gralek.shatee.nlp.ClientContext;
 import com.gralek.shatee.nlp.CommandResponder;
-import com.gralek.shatee.nlp.decorator.SsmlDecorator;
+import com.gralek.shatee.nlp.decorator.Decorator;
 import com.gralek.shatee.repository.RecipeRepository;
 import com.gralek.shatee.utils.ApplicationContextUtils;
 import lombok.Data;
@@ -113,6 +113,9 @@ public class SpeechClient implements ApiStreamObserver<StreamingRecognizeRespons
             case "END":
                 close();
                 break;
+            case "GET":
+                sendTextToClient("Hello");
+                break;
             default:
                 break;
         }
@@ -147,7 +150,7 @@ public class SpeechClient implements ApiStreamObserver<StreamingRecognizeRespons
                 return;
             switch (command) {
                 case "hello there":
-                    InputStream in = SpeechClient.class.getResourceAsStream("/general-kenobi.wav");
+                    InputStream in = SpeechClient.class.getResourceAsStream("/sounds/general-kenobi.wav");
                     try {
                         byte[] data = IOUtils.toByteArray(in);
                         client.send(data);
@@ -160,7 +163,7 @@ public class SpeechClient implements ApiStreamObserver<StreamingRecognizeRespons
                     sendTextToClient("Hello Mr. Gralek.");
                     break;
                 default:
-                    String responseInText = commandResponder.response(transcript.trim(), clientContext);
+                    String responseInText = commandResponder.response(command, clientContext);
                     System.out.println(responseInText);
                     sendTextToClient(responseInText);
                     break;
@@ -170,9 +173,8 @@ public class SpeechClient implements ApiStreamObserver<StreamingRecognizeRespons
 
     private void sendTextToClient(String message) {
 
-
         SynthesisInput input = SynthesisInput.newBuilder()
-                .setSsml(SsmlDecorator.toSsmlText(message))
+                .setSsml(Decorator.toSsmlText(message))
                 .build();
 
         SynthesizeSpeechResponse response1 = textToSpeechClient.synthesizeSpeech(input, voice, audioConfig);

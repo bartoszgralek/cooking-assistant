@@ -12,8 +12,4 @@ import lombok.ToString;
 public class Argument {
     private String type;
     private String name;
-
-    public static enum Type {
-        COMPONENT
-    }
 }
