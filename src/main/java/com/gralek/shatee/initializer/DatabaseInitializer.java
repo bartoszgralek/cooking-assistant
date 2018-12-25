@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
-@Component
 public class DatabaseInitializer implements CommandLineRunner {
 
     @Autowired
@@ -19,9 +18,6 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     @Autowired
     private RecipeRepository recipeRepository;
-
-    @Autowired
-    private ToolRepository toolRepository;
 
 
     @Override
@@ -39,26 +35,12 @@ public class DatabaseInitializer implements CommandLineRunner {
         Recipe r2 = new Recipe("Spaghetti bolognese","http://localhost:8080/downloadFile/bolognese.jpg_8931257340728891798");
         Recipe r3 = new Recipe("Dumplings", "http://localhost:8080/downloadFile/dumplings.jpg_1975114512590872766");
         Recipe r4 = new Recipe("Shakshuka", "http://localhost:8080/downloadFile/shakshuka.jpg_9039782523778522453");
-        Tool tool1 = new Tool("Whisk");
-        Tool tool2 = new Tool("Grater");
 
         Ingredient i1 = new Ingredient("meat", 500, Unit.g);
         Ingredient i2 = new Ingredient("tomato sauce", 500, Unit.ml);
         Ingredient i3 = new Ingredient("olive oil", 20, Unit.ml);
         Ingredient i4 = new Ingredient("Vanilla stick", 2, Unit.szt);
 
-        toolRepository.save(tool1);
-        toolRepository.save(tool2);
-
-        ToolItem t1 = new ToolItem();
-        t1.setQuantity(2);
-        t1.setRecipe(r1);
-        t1.setTool(tool1);
-
-        ToolItem t2 = new ToolItem();
-        t2.setQuantity(1);
-        t2.setRecipe(r1);
-        t2.setTool(tool2);
 
         Step s1 = new Step(1, "Boil pasta");
         Step s2 = new Step(2, "Fry the meat in the pan");
@@ -72,8 +54,8 @@ public class DatabaseInitializer implements CommandLineRunner {
         r1.getSteps().add(s2);
         r1.getSteps().add(s3);
 
-        r1.getTools().add(t1);
-        r1.getTools().add(t2);
+        r1.getTools().add(Tool.KNIFE);
+        r1.getTools().add(Tool.GRATER);
 
         i1.setRecipe(r1);
         i2.setRecipe(r1);

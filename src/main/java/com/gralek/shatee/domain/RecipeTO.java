@@ -15,4 +15,5 @@ public class RecipeTO {
     private String title;
     private String author;
     private String picture;
+    private Status status;
 }

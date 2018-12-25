@@ -1,9 +1,6 @@
 package com.gralek.shatee.nlp;
 
-import com.gralek.shatee.domain.Ingredient;
-import com.gralek.shatee.domain.Recipe;
-import com.gralek.shatee.domain.Step;
-import com.gralek.shatee.domain.Unit;
+import com.gralek.shatee.domain.*;
 import com.gralek.shatee.nlp.decorator.Decorator;
 import com.gralek.shatee.nlp.decorator.IngredientsDecorator;
 import com.gralek.shatee.nlp.decorator.StepsDecorator;
@@ -29,6 +26,7 @@ public class CommandResponder {
 
     public String response(String message, ClientContext clientContext) {
         IntentTrainerResponse response = intentTrainer.categorizeSentence(message);
+        System.out.println(response);
         try {
             switch (response.getAction()) {
                 case "list":
@@ -41,14 +39,18 @@ public class CommandResponder {
                     return nextStep(clientContext);
                 case "current":
                     return currentStep(clientContext);
+                case "previous":
+                    return previousStep(clientContext);
                 case "quantity":
                     String ingredient_2 = findInArgs(response.getArgs(), "ingredient");
                     return quantityForProduct(ingredient_2, clientContext);
                 default:
                     break;
             }
-        } catch (NoTypeInArgumentListException e) {
+        } catch (NoTypeInArgumentListException e) { // command is not recognized
             return "I do not understand what you've said";
+        } catch (NoSuchElementException e) {
+            return "Given ingredient is not in a ingredient list";
         }
         return "";
     }
@@ -80,6 +82,23 @@ public class CommandResponder {
         }
     }
 
+    private String previousStep(ClientContext clientContext) {
+        int previousStep = clientContext.getCurrentStep() - 1;
+
+        if(previousStep < 0)
+            return "This is your first step";
+
+        try {
+            Step step = clientContext.getRecipe().getSteps().get(previousStep);
+            clientContext.setCurrentStep(previousStep);
+
+            return "The previous step is: @pause@" + step.getDescription();
+        }catch(IndexOutOfBoundsException e) {
+            clientContext.setCurrentStep(0);
+            return "You are out of steps. Counter will now reset for you.";
+        }
+    }
+
 
 
 
@@ -90,17 +109,13 @@ public class CommandResponder {
 
     }
 
-    private String quantityForProduct(String ingredient, ClientContext clientContext) throws NoTypeInArgumentListException {
+    private String quantityForProduct(String ingredient, ClientContext clientContext) throws NoSuchElementException {
 
         List<Ingredient> ingredients = clientContext.getRecipe().getIngredients();
         Optional<Ingredient> found = ingredients.stream().filter(i -> i.getName().equals(ingredient)).findFirst();
+        Ingredient ing = found.get();
+        return String.format("%s @pause@ %s %s", ing.getName(),ing.getQuantity(),ing.getUnit());
 
-        try {
-            Ingredient ing = found.get();
-            return String.format("%s @pause@ %s %s", ing.getName(),ing.getQuantity(),ing.getUnit());
-        }catch (NoSuchElementException e){
-            throw new NoTypeInArgumentListException();
-        }
     }
 
     private String listComponent(String component, Recipe recipe) {
@@ -118,8 +133,8 @@ public class CommandResponder {
             case "tools":
                 decorator = new ToolsDecorator();
                 List<String> tools =
-                        recipe
-                                .getTools().stream().map(toolItem -> toolItem.getTool().getName())
+                        recipe.getTools().stream()
+                                .map(Tool::name)
                                 .collect(Collectors.toList());
                 return decorator.decorate(tools);
             case "ingredients":

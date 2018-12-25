@@ -146,6 +146,7 @@ public class SpeechClient implements ApiStreamObserver<StreamingRecognizeRespons
 
         if(transcript.startsWith("assistant")) {
             String command = transcript.replace("assistant", "").trim();
+            System.out.println("Command: " + command);
             if(command.isEmpty())
                 return;
             switch (command) {

@@ -18,9 +18,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 public class AccessController {
@@ -64,6 +70,24 @@ public class AccessController {
     public ResponseEntity<User> login(Authentication auth) {
         User loggedUser = userRepository.findByUsername(auth.getName());
         return new ResponseEntity<>(loggedUser, HttpStatus.OK);
+    }
+
+    public static void main(String[] args) throws IOException, URISyntaxException {
+        Path path = Paths.get(Objects.requireNonNull(AccessController.class.getClassLoader()
+                .getResource("nlp/definition2.txt")).toURI());
+
+
+
+        Stream<String> lines = Files.lines(path);
+        byte[] bytes =
+                lines
+                .distinct()
+                        .map(
+                                e-> "<START> " + e.trim() + " <END>\n"
+
+                        ).collect(Collectors.joining("")).getBytes();
+
+        Files.write(Paths.get("./text.txt"), bytes);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")

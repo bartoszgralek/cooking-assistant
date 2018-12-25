@@ -1,5 +1,6 @@
 package com.gralek.shatee;
 
+import com.gralek.shatee.nlp.intent.IntentProperties;
 import com.gralek.shatee.speech.SpeechWebSocket;
 import com.gralek.shatee.utils.file.FileStorageProperties;
 import org.springframework.boot.SpringApplication;
@@ -17,7 +18,8 @@ import java.util.Collections;
 
 @SpringBootApplication
 @EnableConfigurationProperties({
-		FileStorageProperties.class
+		FileStorageProperties.class,
+		IntentProperties.class
 })
 public class ShateeApplication {
 

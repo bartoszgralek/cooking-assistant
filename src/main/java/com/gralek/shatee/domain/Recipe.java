@@ -25,11 +25,16 @@ public class Recipe {
 
     private String picture;
 
+    private Status status = Status.PENDING;
+
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Step> steps = new ArrayList<>();
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
-    private Set<ToolItem> tools = new HashSet<>();
+    @ElementCollection(targetClass = Tool.class)
+    @JoinTable(name = "tool", joinColumns = @JoinColumn(name = "recipeID"))
+    @Column(name = "tool", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private List<Tool> tools = new ArrayList<>();
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Ingredient> ingredients = new ArrayList<>();
@@ -71,8 +76,7 @@ public class Recipe {
 
     @PreRemove
     private void detachRecipeFromUsers() {
-        users.stream().forEach(user -> user.getFavouriteRecipes().remove(this));
-
+        users.forEach(user -> user.getFavouriteRecipes().remove(this));
     }
 
     public RecipeTO transform() {
@@ -80,7 +84,8 @@ public class Recipe {
                 this.id,
                 this.title,
                 this.author.getUsername(),
-                this.picture
+                this.picture,
+                this.status
         );
     }
 
