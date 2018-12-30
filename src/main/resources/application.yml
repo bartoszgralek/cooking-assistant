@@ -13,7 +13,7 @@ spring:
       hibernate:
         enable_lazy_load_no_trans: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     show-sql: true
   messages:
     basename: validation
@@ -27,3 +27,10 @@ file:
   upload-dir: ./uploads
 nlp:
   train: false
+#server:
+#  port: 8443
+#  ssl:
+#    key-store: keystore.p12
+#    key-store-password: polipoli123
+#    key-store-type: PKCS12
+#    key-alias: tomcat

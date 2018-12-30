@@ -2,10 +2,10 @@ package com.gralek.shatee.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gralek.shatee.utils.Argon2PasswordEncoder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
@@ -19,7 +19,7 @@ import java.util.Set;
 @Entity
 public class User {
 
-    public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+    public static final PasswordEncoder PASSWORD_ENCODER = new Argon2PasswordEncoder();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,8 +62,8 @@ public class User {
 
     @PreRemove
     public void detachAllBonds() {
-        favouriteRecipes.stream().forEach(p->p.getUsers().remove(this));
-        createdRecipes.stream().forEach(p->p.setAuthor(null));
+        favouriteRecipes.forEach(p->p.getUsers().remove(this));
+        createdRecipes.forEach(p->p.setAuthor(null));
     }
 }
 

@@ -37,23 +37,19 @@ public class SpeechWebSocket extends WebSocketServer{
 
     @Override
     public void onMessage(WebSocket webSocket, String message) {
-        synchronized (clients) {
-            for (SpeechClient client : clients) {
-                if (client.getClient().equals(webSocket)) {
-                    client.onMessage(message);
-                    //client.initialize(message);
-                }
+        for (SpeechClient client : clients) {
+            if (client.getClient().equals(webSocket)) {
+                client.onMessage(message);
+                //client.initialize(message);
             }
         }
     }
 
     @Override
     public void onMessage( WebSocket webSocket, ByteBuffer data ) {
-        synchronized (clients) {
-            for(SpeechClient client : clients) {
-                if (client.getClient().equals(webSocket)) {
-                    client.onMessage(data);
-                }
+        for(SpeechClient client : clients) {
+            if (client.getClient().equals(webSocket)) {
+                client.onMessage(data);
             }
         }
     }
@@ -67,13 +63,11 @@ public class SpeechWebSocket extends WebSocketServer{
     @Override
     public void onClose(WebSocket webSocket, int code, String reason, boolean remote) {
         System.out.println("Connection closed " + webSocket.getRemoteSocketAddress());
-        synchronized (clients) {
-            for(SpeechClient client : clients) {
-                if(client.getClient().equals(webSocket)) {
-                    client.close();
-                    clients.remove(client);
+        for(SpeechClient client : clients) {
+            if(client.getClient().equals(webSocket)) {
+                client.close();
+                clients.remove(client);
 
-                }
             }
         }
     }

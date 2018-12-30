@@ -1,7 +1,8 @@
 package com.gralek.shatee.initializer;
 
 import com.gralek.shatee.domain.*;
-import com.gralek.shatee.repository.*;
+import com.gralek.shatee.repository.RecipeRepository;
+import com.gralek.shatee.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
+@Component
 public class DatabaseInitializer implements CommandLineRunner {
 
     @Autowired
@@ -31,10 +33,10 @@ public class DatabaseInitializer implements CommandLineRunner {
         userRepository.save(u1);
         userRepository.save(u2);
 
-        Recipe r1 = new Recipe("Chicken curry","http://localhost:8080/downloadFile/curry.jpg_3901085492817033069");
-        Recipe r2 = new Recipe("Spaghetti bolognese","http://localhost:8080/downloadFile/bolognese.jpg_8931257340728891798");
-        Recipe r3 = new Recipe("Dumplings", "http://localhost:8080/downloadFile/dumplings.jpg_1975114512590872766");
-        Recipe r4 = new Recipe("Shakshuka", "http://localhost:8080/downloadFile/shakshuka.jpg_9039782523778522453");
+        Recipe r1 = new Recipe("Chicken curry","curry.jpg_3901085492817033069");
+        Recipe r2 = new Recipe("Spaghetti bolognese","bolognese.jpg_8931257340728891798");
+        Recipe r3 = new Recipe("Dumplings", "dumplings.jpg_1975114512590872766");
+        Recipe r4 = new Recipe("Shakshuka", "shakshuka.jpg_9039782523778522453");
 
         Ingredient i1 = new Ingredient("meat", 500, Unit.g);
         Ingredient i2 = new Ingredient("tomato sauce", 500, Unit.ml);

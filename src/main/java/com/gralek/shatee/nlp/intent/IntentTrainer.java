@@ -10,9 +10,6 @@ import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -97,7 +94,7 @@ public class IntentTrainer {
         List<Argument> args = new ArrayList<>();
         String action = null;
 
-        for(int j=0;j<10 || args.isEmpty();j++) { //sometimes args list is empty idk why
+        for(int j=0;j<10 && args.isEmpty();j++) { //sometimes args list is empty idk why
             args = new ArrayList<>();
 
             double[] outcome = categorizer.categorize(tokenizer.tokenize(message));
