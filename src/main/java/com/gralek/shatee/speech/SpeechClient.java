@@ -161,7 +161,7 @@ public class SpeechClient implements ApiStreamObserver<StreamingRecognizeRespons
                     }
                     break;
                 case "hello":
-                    sendTextToClient("Hello Mr. Gralek.");
+                    sendTextToClient("Hello");
                     break;
                 default:
                     String responseInText = commandResponder.response(command, clientContext);
