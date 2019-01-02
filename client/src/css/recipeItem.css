@@ -1,0 +1,30 @@
+.recipeItem {
+    margin:5px;
+    display: block;
+    border: 5px solid #FF6A5C;
+    border-collapse: collapse;
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    background-color: #414141;
+    cursor: pointer;
+}
+
+.recipeItem img {
+    width: 100%;
+    height: 30vh;
+}
+
+.recipeItem .info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.recipeItem .info div:last-child {
+    color: #FF6A5C;
+}
+
+.recipeItem .info div {
+    padding: 1em;
+}
+

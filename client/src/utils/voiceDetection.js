@@ -79,7 +79,7 @@ function handleSuccess(stream) {
         let formData = new FormData();
         formData.append("file", audio);
         formData.append("sampleRate", audio_context.sampleRate);
-        axios.post('http://localhost:8080/speech', formData, {
+        axios.post('/speech', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

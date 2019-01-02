@@ -1,0 +1,66 @@
+.bars {
+    background-color: #414141;
+    width: 100%;
+    display: none;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+}
+
+.bars a {
+    text-decoration: none;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.bars .icon {
+    text-decoration: none;
+    padding: 1em 2em 1em 2em;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bars .icon i {
+    font-size: 2em;
+    color: white;
+}
+
+.bars a h2 {
+    align-self: flex-start;
+    margin:0;
+    display:inline-block;
+    color: white;
+    font: 200 70px/0.4 'Cookie', Helvetica, sans-serif;
+    text-shadow: 4px 4px 3px rgba(0,0,0,0.1);
+}
+
+.bars a h2:hover {
+    color: #FF6A5C;
+}
+
+.bars a.logo {
+    padding: 1.5em;
+}
+
+.bars a.icon {
+    align-self: center;
+    text-align: right;
+    text-decoration: none;
+    color: white;
+    font-size: 2em;
+    padding-right: 40px;
+}
+
+
+
+@media screen and (max-width: 720px) {
+    .bars {
+        display: flex;
+        box-shadow: 0 4px 8px -2px #FF6A5C;
+    }
+    .bars.open {
+        box-shadow: 0 4px 8px #fff;
+    }
+}

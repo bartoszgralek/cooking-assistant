@@ -1,0 +1,82 @@
+.mycontainer {
+    display: grid;
+    grid-template-columns: 2fr 1fr 3fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "picture picture title"
+        "buttons buttons buttons"
+        "ing ing tools"
+        "steps steps steps";
+}
+
+.mycontainer :not(.picture) {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.mycontainer ul,ol {
+    padding-inline-start: 10px;
+}
+
+.mycontainer .picture,.buttons {
+    margin-bottom: 0.5em;
+}
+
+.picture {
+    grid-area: picture;
+    width: 100%;
+}
+
+.title {
+    grid-area: title;
+    text-align: right;
+    padding: 2em;
+}
+
+.ing {
+    grid-area: ing;
+}
+
+.ing table {
+    width:100%;
+    border-collapse: separate;
+    border-spacing: 5px 0;
+}
+
+.ing table td:first-child {
+    width: 80%;
+}
+
+
+
+.tools {
+    grid-area: tools;
+}
+
+.steps {
+    grid-area: steps;
+}
+
+.buttons {
+    grid-area: buttons;
+    text-align: center;
+}
+
+@media screen and (max-width: 540px) {
+
+    .mycontainer {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "picture"
+            "title"
+            "buttons"
+            "ing"
+            "tools"
+            "steps";
+        padding: 0;
+    }
+
+    .mycontainer .title {
+        padding: 1em;
+    }
+}

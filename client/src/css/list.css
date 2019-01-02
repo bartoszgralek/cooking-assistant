@@ -1,0 +1,38 @@
+.list {
+
+}
+
+.list > table {
+    table-layout:fixed;
+    width:100%;
+    text-align: center;
+}
+
+.list .table td {
+    vertical-align: middle;
+}
+
+.list .table td {
+    font-size: 20px;
+}
+
+.list .table th {
+    font-size: 25px;
+}
+
+.list .table tr {
+    border: 2px solid #FF6A5C;
+    background: #fff;
+}
+
+.list .table tr th {
+    border-bottom: 2px solid #FF6A5C;
+}
+
+.list tbody:hover {
+    cursor: pointer;
+}
+
+.list tbody tr:hover {
+    background-color: #FF6A5C;
+}

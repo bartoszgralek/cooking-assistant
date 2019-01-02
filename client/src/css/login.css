@@ -1,0 +1,72 @@
+/* Bordered form */
+.login {
+    border: 3px solid #f1f1f1;
+    background-color: white;
+    margin: 0 auto;
+    max-width: 720px;
+    padding: 16px;
+    border-radius: 10px;
+}
+
+/* Full-width inputs */
+.login input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+.login button {
+    background-color: #ff4f3f;
+    color: white;
+    padding: 14px 14px;
+    width: 20%;
+    margin: auto;
+    border: none;
+    cursor: pointer;
+}
+
+/* Add a hover effect for buttons */
+.login button:hover {
+    opacity: 0.8;
+}
+
+.login p {
+    color: red;
+    font-size: 1.2em;
+}
+
+.welcome h2{
+    text-align: center;
+    color: white;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    font: 400 130px/0.8 'Cookie', Helvetica, sans-serif;
+    text-shadow: 4px 4px 3px rgba(0,0,0,0.1);
+}
+
+.welcome {
+    vertical-align: center;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 720px) {
+    .login button {
+        max-width: none;
+        display: block;
+        width: 100%;
+    }
+
+    .login {
+        margin: 5px;
+    }
+
+    .welcome > h2 {
+        padding-top: 20px;
+        padding-bottom: 30px;
+        font: 320 100px/0.6 'Cookie', Helvetica, sans-serif;
+    }
+}

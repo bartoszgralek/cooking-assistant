@@ -1,0 +1,15 @@
+.loginbutton {
+    background-color: #ff4f3f;
+    color: white;
+    padding: 14px 14px;
+    width: 20%;
+    margin: auto;
+    border: none;
+    cursor: pointer;
+}
+
+.loginbutton {
+    max-width: none;
+    display: block;
+    width: 100%;
+}
