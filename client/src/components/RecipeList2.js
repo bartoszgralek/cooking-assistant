@@ -38,7 +38,7 @@ class RecipeList2 extends Component{
                     <li>
                         <div className="recipeItem" key={el.id} onClick={() => history.push("/home/recipes/"+el.id)}>
                             <h4>{el.title}</h4>
-                            <img src={"http://192.168.0.165:8080/downloadFile/" + el.picture} alt=""/>
+                            <img src={"http://localhost:8080/downloadFile/" + el.picture} alt=""/>
                             <div className="info">
                                 <div>Author</div>
                                 <div>{el.author}</div>

@@ -2,7 +2,7 @@ import axios from 'axios';
 import history from "./history";
 
 export const login = (username, password) => {
-    axios.defaults.baseURL = 'http://192.168.0.165:8080';
+    axios.defaults.baseURL = 'http://localhost:8080';
     return new Promise((resolve, reject) => {
         axios.get('/login', {
             headers: {
@@ -33,7 +33,7 @@ export const logout = () => {
     let username = localStorage.getItem("username");
     let password = localStorage.getItem("password");
     axios.defaults.headers.common['Authorization'] = "Basic " + btoa(username + ":" + password);
-    axios.defaults.baseURL = 'http://192.168.0.165:8080';
+    axios.defaults.baseURL = 'http://localhost:8080';
 })();
 
 
