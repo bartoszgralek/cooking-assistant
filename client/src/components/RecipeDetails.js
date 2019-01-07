@@ -70,7 +70,7 @@ class RecipeDetails extends Component {
 
         return (
             <div className="content mycontainer">
-                <img src={"http://192.168.0.165:8080/downloadFile/" + this.state.recipe.picture} className="picture" alt=""/>
+                <img src={"http://localhost:8080/downloadFile/" + this.state.recipe.picture} className="picture" alt=""/>
                 <div className="title">
                     <h1>{this.state.recipe.title}</h1> <br/>
                     {this.state.recipe.author.username}

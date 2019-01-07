@@ -7,7 +7,7 @@ let mute = false;
 
 export function init() {
 
-    ws = new WebSocket("ws://192.168.0.165:8887");
+    ws = new WebSocket("ws://localhost:8887");
     ws.onopen = function () {
         console.log("Opened connection to websocket");
     };
