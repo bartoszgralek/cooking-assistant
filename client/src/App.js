@@ -8,7 +8,7 @@ import {
     Route
 } from "react-router-dom";
 import Home from './components/Home.js';
-import RecipeList2 from "./components/RecipeList2";
+import RecipeList2 from "./components/RecipeList";
 import ModalRoot from './modals/rootModal';
 import {logout} from './utils/access';
 import RecipeDetails from "./components/RecipeDetails";

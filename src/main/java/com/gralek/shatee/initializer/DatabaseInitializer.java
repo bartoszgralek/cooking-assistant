@@ -37,11 +37,62 @@ public class DatabaseInitializer implements CommandLineRunner {
         Recipe r2 = new Recipe("Spaghetti bolognese","bolognese.jpg_8931257340728891798");
         Recipe r3 = new Recipe("Dumplings", "dumplings.jpg_1975114512590872766");
         Recipe r4 = new Recipe("Shakshuka", "shakshuka.jpg_9039782523778522453");
+        Recipe r5 = new Recipe("Banana curry", "banana_curry.jpg");
+
+        Ingredient olive_oil = new Ingredient("olive oil", 1, Unit.tbsp);
+        r5.getIngredients().add(olive_oil);
+        Ingredient red_onion = new Ingredient("red onion", 1, Unit.pc);
+        r5.getIngredients().add(red_onion);
+        Ingredient apple = new Ingredient("apple", 1, Unit.pc);
+        r5.getIngredients().add(apple);
+        Ingredient curry_powder = new Ingredient("curry powder", 2, Unit.tbsp);
+        r5.getIngredients().add(curry_powder);
+        Ingredient sultanas = new Ingredient("sultanas", 2, Unit.tbsp);
+        r5.getIngredients().add(sultanas);
+        Ingredient cashew_nuts = new Ingredient("cashew nuts", 2, Unit.tbsp);
+        r5.getIngredients().add(cashew_nuts);
+        Ingredient bananas = new Ingredient("bananas", 3, Unit.pc);
+        r5.getIngredients().add(bananas);
+        Ingredient coriander = new Ingredient("coriander", 2, Unit.tbsp);
+        r5.getIngredients().add(coriander);
+        Ingredient rice = new Ingredient("rice", 100, Unit.g);
+        r5.getIngredients().add(rice);
+
+        r5.getTools().add(Tool.KNIFE);
+        r5.getTools().add(Tool.BOWL);
+        r5.getTools().add(Tool.POT);
+
+        Step e = new Step(1, "Heat the oil in a pan and sauté the onion for 2-3 minutes");
+        r5.getSteps().add(e);
+        Step e1 = new Step(2, "Add the apple and curry powder and cook for 1-2 minutes, stirring, before adding the sultanas and cashew nuts");
+        r5.getSteps().add(e1);
+        Step e2 = new Step(3, "Continue to cook for 5-6 minutes, to soften the apple");
+        r5.getSteps().add(e2);
+        Step e3 = new Step(4, "Add the banana and cook for a further 3-4 minutes, stirring occasionally");
+        r5.getSteps().add(e3);
+        Step e4 = new Step(5, "Stir in the chopped coriander, season to taste and serve with rice");
+        r5.getSteps().add(e4);
+
+        olive_oil.setRecipe(r5);
+        red_onion.setRecipe(r5);
+        apple.setRecipe(r5);
+        curry_powder.setRecipe(r5);
+        sultanas.setRecipe(r5);
+        cashew_nuts.setRecipe(r5);
+        bananas.setRecipe(r5);
+        coriander.setRecipe(r5);
+        rice.setRecipe(r5);
+
+        e.setRecipe(r5);
+        e1.setRecipe(r5);
+        e2.setRecipe(r5);
+        e3.setRecipe(r5);
+        e4.setRecipe(r5);
 
         Ingredient i1 = new Ingredient("meat", 500, Unit.g);
         Ingredient i2 = new Ingredient("tomato sauce", 500, Unit.ml);
         Ingredient i3 = new Ingredient("olive oil", 20, Unit.ml);
-        Ingredient i4 = new Ingredient("Vanilla stick", 2, Unit.szt);
+        Ingredient i4 = new Ingredient("Vanilla stick", 2, Unit.pc);
 
 
         Step s1 = new Step(1, "Boil pasta");
@@ -81,6 +132,9 @@ public class DatabaseInitializer implements CommandLineRunner {
 
         r4.setAuthor(u1);
         r4 = recipeRepository.save(r4);
+
+        r5.setAuthor(u1);
+        r5 = recipeRepository.save(r5);
 
 
 

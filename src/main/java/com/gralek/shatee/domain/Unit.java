@@ -7,5 +7,5 @@ public enum Unit {
     ml, l, dl,
     lb, oz, mg, g, kg,
     mm, cm, m, in,
-    szt
+    pc
 }

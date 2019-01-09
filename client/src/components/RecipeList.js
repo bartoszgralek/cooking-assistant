@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {Loader} from "./utils/Loader";
-import {Button, ButtonGroup} from "reactstrap";
+import '../css/list.css';
+import {Button} from "reactstrap";
 import {showModal} from "../redux/modalReducer";
 import axios from 'axios';
 import {NotAuth} from "./utils/NotAuth";
-import "../css/grid.css";
+import history from '../utils/history';
 import "../css/recipeItem.css";
+import "../css/grid.css";
 
 class RecipeList extends Component{
     constructor(props) {
@@ -20,7 +22,9 @@ class RecipeList extends Component{
     }
 
     async componentDidMount() {
-        axios.get('/recipes')
+        console.log(this.props.mode);
+        let url = this.props.mode === "all" ? "/recipes" : "/users/" + localStorage.getItem("id") + "/favourites";
+        axios.get(url)
             .then(response => {
                 console.log(response);
                 this.setState({recipes: response.data, loading: false})
@@ -28,28 +32,20 @@ class RecipeList extends Component{
             .catch(err => this.setState({err: err, loading: false}))
     }
 
-    deleteRecipe = (recipe) => {
-        axios.delete("/recipes/"+recipe.id);
-        this.setState(previous => {
-            return {
-                recipes: previous.recipes.filter(el => el.id !== recipe.id)
-            }
-        });
-    };
-
     render() {
         const recipeList = this.state.recipes.map(el => {
-                return <tr key={el.id} onClick={() => this.props.history.push("/home/recipes/"+el.id)}>
-                    <img src={el.picture}/>
-                    <td style={{whiteSpace: 'nowrap'}}>{el.title}</td>
-                    <td style={{whiteSpace: 'nowrap'}}>{el.author}</td>
-                    {this.state.role === 'ROLE_ADMIN' ? <td style={{whiteSpace: 'nowrap'}}>
-                        <ButtonGroup>
-                            <Button color="primary" onClick={(ev) => {this.props.editRecipe(el); ev.stopPropagation();}}>Edit</Button>
-                            <Button color="danger" onClick={(ev) => {this.deleteRecipe(el); ev.stopPropagation();}}>Delete</Button>
-                        </ButtonGroup>
-                    </td> : null}
-                </tr>
+                return (
+                    <li>
+                        <div className="recipeItem" key={el.id} onClick={() => history.push("/home/recipes/"+el.id)}>
+                            <h4>{el.title}</h4>
+                            <img src={"http://89.76.163.172:8080/downloadFile/" + el.picture} alt=""/>
+                            <div className="info">
+                                <div>Author</div>
+                                <div>{el.author}</div>
+                            </div>
+                        </div>
+                    </li>
+                );
             }
         );
 
@@ -62,21 +58,10 @@ class RecipeList extends Component{
         }
 
         return (
-            <div className="list content">
-                <h2>Recipe list</h2>
-                <table className="table">
-                    <thead>
-                    <tr>
-                        <th>picture</th>
-                        <th>title</th>
-                        <th>author</th>
-                        {this.state.role === 'ROLE_ADMIN' ? <th>actions</th> : null}
-                    </tr>
-                    </thead>
-                    <tbody>
+            <div className="content">
+                <ul className="grid">
                     {recipeList}
-                    </tbody>
-                </table>
+                </ul>
             </div>
         );
     }

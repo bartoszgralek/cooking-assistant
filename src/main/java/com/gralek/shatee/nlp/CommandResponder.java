@@ -118,7 +118,7 @@ public class CommandResponder {
 
     }
 
-    private String listComponent(String component, Recipe recipe) {
+    private String listComponent(String component, Recipe recipe) throws NoTypeInArgumentListException {
 
         Decorator decorator;
 
@@ -145,7 +145,7 @@ public class CommandResponder {
                                 .collect(Collectors.toList());
                 return decorator.decorate(ingredients);
             default:
-                return "";
+                throw new NoTypeInArgumentListException();
         }
     }
 

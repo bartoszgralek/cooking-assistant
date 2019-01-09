@@ -36,3 +36,14 @@
 .list tbody tr:hover {
     background-color: #FF6A5C;
 }
+
+@media screen and (max-width: 560px) {
+    .list .table td, .list .table th{
+        padding: 0;
+        margin: 0;
+    }
+
+    .list .table {
+        border-spacing: 0px;
+    }
+}

@@ -5,5 +5,6 @@ public enum Tool {
     WHISK,
     BOWL,
     KNIFE,
-    OVEN
+    OVEN,
+    POT
 }
